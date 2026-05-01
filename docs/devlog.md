@@ -284,3 +284,7 @@ server.closeAllConnections():
   - board, manage, and admin pages were simplified and restyled
   - several pages now use `h-dvh`
   - enabled smooth scrolling
+
+## 2026-05-01
+
+- Added `docs/backlog.md` to track ongoing work beyond the original plan.
