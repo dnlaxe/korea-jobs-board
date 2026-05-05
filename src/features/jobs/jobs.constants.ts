@@ -1,3 +1,10 @@
+export const limits = {
+  HEADING_MAX: 50,
+  SUBHEADING_MAX: 70,
+  FULL_DESCRIPTION_MAX: 120,
+  OTHER_LANGUAGES_MAX: 50,
+};
+
 export const specializationsByCategory = {
   Teaching: [
     "Kindergarten",

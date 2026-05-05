@@ -3,7 +3,7 @@ import { appLogger } from "../../middleware/logger.js";
 import { getSessionBySessionId } from "../../repo/session.repo.js";
 import { getPendingPostsBySessionId } from "../../repo/pending-post.repo.js";
 import { PendingPostRow } from "../../types/types.js";
-import { config } from "../../config/config.js";
+import { config, isMockPaymentsEnabled } from "../../config/config.js";
 import { insertPayment } from "../../repo/payment.repo.js";
 
 type StartSessionPaymentData =
@@ -73,41 +73,32 @@ export async function startSessionPayment(
     return { success: false, error: { reason: "DB_ERROR" } };
   }
 
-  const successUrl = new URL("/payments/success", config.base_url);
-  successUrl.searchParams.set("paymentRef", paymentRef);
+  if (isMockPaymentsEnabled) {
+    return {
+      success: true,
+      data: {
+        kind: "checkout",
+        amount: amountDue,
+        checkoutUrl: `${config.base_url}/dummy-payment?paymentRef=${paymentRef}`,
+      },
+    };
+  } else {
+    const successUrl = new URL("/payments/success", config.base_url);
+    successUrl.searchParams.set("paymentRef", paymentRef);
 
-  const cancelUrl = new URL("/payments/cancel", config.base_url);
-  cancelUrl.searchParams.set("paymentRef", paymentRef);
+    const cancelUrl = new URL("/payments/cancel", config.base_url);
+    cancelUrl.searchParams.set("paymentRef", paymentRef);
+    // real payment
 
-  //   let payment;
-
-  //     try {
-  //     payment = await createProviderCheckout();
-  //     } catch (err) {
-  //     appLogger.error({ err, sessionId, paymentRef }, "Provider checkout creation failed");
-  //     return { success: false, error: { reason: "PAYMENT_PROVIDER_ERROR" } };
-  //     }
-
-  //     try {
-  //     await updatePaymentProviderDetails(
-  //         paymentRef,
-  //         payment.paymentId,
-  //         payment.paymentIntentId,
-  //     );
-  //     } catch (err) {
-  //     appLogger.error({ err, sessionId, paymentRef }, "Persisting provider payment details failed");
-  //     return { success: false, error: { reason: "DB_ERROR" } };
-  //     }
-
-  // example while above isn't wired up
-  return {
-    success: true,
-    data: {
-      kind: "checkout",
-      amount: amountDue,
-      checkoutUrl: "http://localhost:3002/dummy-payment",
-    },
-  };
+    return {
+      success: true,
+      data: {
+        kind: "checkout",
+        amount: amountDue,
+        checkoutUrl: "",
+      },
+    };
+  }
 }
 
 function calculateSessionAmount(posts: PendingPostRow[]): number {

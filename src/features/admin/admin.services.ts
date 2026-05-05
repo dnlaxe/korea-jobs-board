@@ -21,7 +21,7 @@ import {
 } from "../../types/types.js";
 import { createMagicToken } from "../../repo/magic-token.repo.js";
 import { sendReceipt, sendRelayMessage } from "../../shared/email.js";
-import { config } from "../../config/config.js";
+import { config, isMockEmailRelayEnabled } from "../../config/config.js";
 import { generateUniqueSlug } from "../../shared/slug.js";
 import {
   getAllPendingRelayMessages,
@@ -77,6 +77,10 @@ export async function approveSessionByAdmin(
     email = session.email;
 
     await approveSession(sessionId);
+    appLogger.info(
+      { sessionId, email },
+      "approveSessionByAdmin session approved",
+    );
 
     await insertAuditEvents([
       {
@@ -92,7 +96,10 @@ export async function approveSessionByAdmin(
       },
     ]);
 
-    appLogger.info({ sessionId }, "Session approved");
+    appLogger.info(
+      { sessionId, eventType: "session.approved" },
+      "approveSessionByAdmin session audit inserted",
+    );
   } catch (err) {
     appLogger.error(
       { err, sessionId },
@@ -101,10 +108,6 @@ export async function approveSessionByAdmin(
     return { success: false, error: { reason: "DB_ERROR" } };
   }
 
-  // tier should no longer be hardcoded here, its in db in pending post, add to flow!!!
-
-  const tier = "standard";
-
   try {
     const jobs = await getPendingPostsBySessionId(sessionId);
 
@@ -112,9 +115,16 @@ export async function approveSessionByAdmin(
       return { success: false, error: { reason: "POSTS_NOT_FOUND" } };
     }
 
+    appLogger.info(
+      { sessionId, jobCount: jobs.length },
+      "approveSessionByAdmin pending posts loaded",
+    );
+
     for (const job of jobs) {
       const slugResult = await generateUniqueSlug(job);
       if (!slugResult.success) return slugResult;
+      const tier = job.tier;
+
       await insertLivePost(
         job,
         sessionId,
@@ -122,6 +132,16 @@ export async function approveSessionByAdmin(
         livePostExpiresAt,
         slugResult.data,
         tier,
+      );
+
+      appLogger.info(
+        {
+          sessionId,
+          pendingPostId: job.id,
+          slug: slugResult.data,
+          tier,
+        },
+        "approveSessionByAdmin live post inserted",
       );
 
       await insertAuditEvents([
@@ -143,7 +163,10 @@ export async function approveSessionByAdmin(
       ]);
     }
 
-    appLogger.info({ sessionId, jobCount: jobs.length }, "Live posts inserted");
+    appLogger.info(
+      { sessionId, jobCount: jobs.length },
+      "approveSessionByAdmin all live posts inserted",
+    );
   } catch (err) {
     appLogger.error(
       { err, sessionId },
@@ -165,10 +188,22 @@ export async function approveSessionByAdmin(
   const manageUrl = new URL("/manage", config.base_url);
   manageUrl.searchParams.set("token", magicTokenRow.token);
 
-  const receipt = await sendReceipt(manageUrl.toString());
+  if (!isMockEmailRelayEnabled) {
+    appLogger.info({ sessionId }, "approveSessionByAdmin sending receipt email");
 
-  if (!receipt.success) {
-    return { success: false, error: { reason: "EMAIL_API_ERROR" } };
+    const receipt = await sendReceipt(manageUrl.toString());
+
+    if (!receipt.success) {
+      appLogger.error({ sessionId }, "approveSessionByAdmin receipt email failed");
+      return { success: false, error: { reason: "EMAIL_API_ERROR" } };
+    }
+
+    appLogger.info({ sessionId }, "approveSessionByAdmin receipt email sent");
+  } else {
+    appLogger.info(
+      { sessionId },
+      "approveSessionByAdmin receipt email skipped in mock mode",
+    );
   }
 
   return { success: true, data: undefined };
@@ -310,18 +345,35 @@ export async function approveRelayMessageByAdmin(
     return { success: false, error: { reason: "DB_ERROR" } };
   }
 
-  const emailResult = await sendRelayMessage(
-    message.fromEmail,
-    message.toEmail,
-    message.message,
-  );
-
-  if (!emailResult.success) {
-    appLogger.error(
+  if (!isMockEmailRelayEnabled) {
+    appLogger.info(
       { id, fromEmail: message.fromEmail, toEmail: message.toEmail },
-      "sendRelayMessage failed",
+      "approveRelayMessageByAdmin sending relay email",
     );
-    return { success: false, error: { reason: "EMAIL_NOT_SENT" } };
+
+    const emailResult = await sendRelayMessage(
+      message.fromEmail,
+      message.toEmail,
+      message.message,
+    );
+
+    if (!emailResult.success) {
+      appLogger.error(
+        { id, fromEmail: message.fromEmail, toEmail: message.toEmail },
+        "sendRelayMessage failed",
+      );
+      return { success: false, error: { reason: "EMAIL_NOT_SENT" } };
+    }
+
+    appLogger.info(
+      { id, fromEmail: message.fromEmail, toEmail: message.toEmail },
+      "approveRelayMessageByAdmin relay email sent",
+    );
+  } else {
+    appLogger.info(
+      { id, fromEmail: message.fromEmail, toEmail: message.toEmail },
+      "approveRelayMessageByAdmin relay email skipped in mock mode",
+    );
   }
 
   try {

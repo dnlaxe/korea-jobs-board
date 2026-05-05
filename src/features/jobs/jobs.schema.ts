@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { jobFormOptions } from "./jobs.constants.js";
+import { jobFormOptions, limits } from "./jobs.constants.js";
 
 export const jobFormSchema = z
   .object({
@@ -8,12 +8,20 @@ export const jobFormSchema = z
     }),
 
     contactUrl: z.preprocess(
-      (val) => (val === "" ? undefined : val),
-      z.url({ error: "Please enter a valid URL" }).trim().optional(),
+      (value) => (value === "" ? undefined : value),
+      z.httpUrl({ error: "Please enter a valid URL" }).trim().optional(),
     ),
 
-    heading: z.string({ error: "Heading is required" }).trim().min(1),
-    subheading: z.string({ error: "Subheading is required" }).trim().min(1),
+    heading: z
+      .string({ error: "Heading is required" })
+      .trim()
+      .min(1)
+      .max(limits.HEADING_MAX),
+    subheading: z
+      .string({ error: "Subheading is required" })
+      .trim()
+      .min(1)
+      .max(limits.SUBHEADING_MAX),
     category: z.enum(jobFormOptions.category, { error: "Invalid category" }),
     specialization: z.enum(jobFormOptions.specialization, {
       error: "Invalid specialization",
@@ -45,7 +53,8 @@ export const jobFormSchema = z
     fullDescription: z
       .string({ error: "Full description is required" })
       .trim()
-      .min(1),
+      .min(1)
+      .max(limits.FULL_DESCRIPTION_MAX),
   })
   .refine(
     (data) => {

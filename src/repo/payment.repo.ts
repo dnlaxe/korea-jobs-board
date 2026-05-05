@@ -30,3 +30,23 @@ export async function updatePaymentProviderDetails(
 
   return row ?? null;
 }
+
+export async function markPaymentCaptured(paymentRef: string) {
+  const [row] = await db
+    .update(payment)
+    .set({ status: "captured" })
+    .where(eq(payment.paymentRef, paymentRef))
+    .returning();
+
+  return row ?? null;
+}
+
+export async function markPaymentCancelled(paymentRef: string) {
+  const [row] = await db
+    .update(payment)
+    .set({ status: "cancelled" })
+    .where(eq(payment.paymentRef, paymentRef))
+    .returning();
+
+  return row ?? null;
+}

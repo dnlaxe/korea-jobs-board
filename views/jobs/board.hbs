@@ -1,30 +1,30 @@
-<div>
+<div class="border-x border-slate-200">
 
   {{> board-filters}}
 
-  <div class="flex flex-col md:gap-2">
+  <div class="flex flex-col">
     {{#if loadError}}
-      <p class="text-red-500 text-sm border border-red-500 py-1 px-2 rounded inline-block">Something went wrong loading posts.</p>
+      <p class="text-red-500 text-sm border border-red-500 px-2 rounded inline-block">Something went wrong loading posts.</p>
     {{else if posts}}
       {{#if pinnedPosts}}
-        <p class="flex items-center gap-4 text-2xl font-bold mt-4 mb-1 mx-4">Pinned Posts</p>
+        <p class="flex items-center gap-4 tracking-wide font-mono uppercase m-4 text-sm">Pinned Posts</p>
         {{#each pinnedPosts}}
           {{> public-job-card this}}
         {{/each}}
       {{/if}}
       {{#if posts}}
-        <p class="flex items-center gap-4 text-2xl font-bold mt-4 mb-1 mx-4">Latest Posts</p>
+        <p class="flex items-center gap-4 tracking-wide font-mono uppercase m-4 text-sm">Latest Posts</p>
         {{#each posts}}
           {{> public-job-card this}}
         {{/each}}
       {{/if}}
-      <div class="flex justify-between px-4 md:px-0 py-8 border-y border-slate-200">
-      <a href="/jobs/board" class="border border-slate-200 py-1 px-3 font-mono uppercase text-sm">Reset Filters</a>
-      <a href="#" class="border border-slate-200 py-1 px-3 font-mono uppercase text-sm">Back to top</a>
+      <div class="flex justify-between border-y border-slate-200">
+      <a href="/jobs/board" class="inline-flex items-center bg-blue-500/80 px-3 py-2 font-mono text-sm uppercase tracking-wider text-white">Reset Filters</a>
+      <a href="#" class="inline-flex items-center bg-blue-500/80 px-3 py-2 font-mono text-sm uppercase tracking-wider text-white">Back to top</a>
       </div>
     {{else}}
       <p class="uppercase tracking-wide p-4 pb-0">No live posts yet.</p>
-      <a href="/jobs/board" class="text-sm uppercase tracking-widest p-4 mb-2 flex border-y md:border-x border-[#CBCCCE] hover:border-[#0D0D0D]">Reset filters</a>
+      <a href="/jobs/board" class="mb-2 inline-flex items-center bg-blue-500/80 px-3 py-2 font-mono text-sm uppercase tracking-wider text-white">Reset filters</a>
     {{/if}}
   </div>
 

@@ -359,3 +359,32 @@ if (presentErrors) {
   changeBackBtnToBackToReviewBtn();
   showStep(STEPS.REVIEW);
 }
+
+const heading = document.querySelector("#heading");
+const headingCount = document.querySelector("#headingCount");
+
+const subheading = document.querySelector("#subheading");
+const subheadingCount = document.querySelector("#subheadingCount");
+
+const fullDescription = document.querySelector("#fullDescription");
+const fullDescriptionCount = document.querySelector("#fullDescriptionCount");
+
+const otherLanguages = document.querySelector("#otherLanguages");
+const otherLanguagesCount = document.querySelector("#otherLanguagesCount");
+
+function letterCounter(input, counter) {
+  const limit = Number(counter.textContent);
+
+  input.maxLength = limit;
+
+  input.addEventListener("input", () => {
+    const count = input.value.length;
+    const remaining = Math.max(0, limit - count);
+    counter.textContent = remaining;
+  });
+}
+
+letterCounter(heading, headingCount);
+letterCounter(subheading, subheadingCount);
+letterCounter(fullDescription, fullDescriptionCount);
+letterCounter(otherLanguages, otherLanguagesCount);

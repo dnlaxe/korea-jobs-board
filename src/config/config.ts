@@ -9,8 +9,12 @@ export const config = {
   admin_username: env.ADMIN_USERNAME,
   admin_password: env.ADMIN_PASSWORD,
   basic_auth: env.BASIC_AUTH_ENABLED,
+  mock_payments: env.MOCK_PAYMENT,
+  mock_email_relay: env.MOCK_RELAY_EMAIL,
 };
 
 export const isDevelopment = config.node_env === "development";
 export const isProduction = config.node_env === "production";
 export const isBasicAuthEnabled = config.basic_auth === true;
+export const isMockPaymentsEnabled = config.mock_payments === true;
+export const isMockEmailRelayEnabled = config.mock_email_relay === true;

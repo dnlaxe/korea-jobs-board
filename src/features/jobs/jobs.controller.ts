@@ -15,10 +15,12 @@ import {
 import {
   citiesByProvince,
   jobFormOptions,
+  limits,
   specializationsByCategory,
 } from "./jobs.constants.js";
 import { getSessionBySessionId } from "../../repo/session.repo.js";
 import { startSessionPayment } from "../payment/payment.services.js";
+import { isMockPaymentsEnabled } from "../../config/config.js";
 
 export async function storeGatewayEmail(req: Request, res: Response) {
   const { email } = req.body;
@@ -175,6 +177,7 @@ export async function getForm(req: Request, res: Response) {
     sessionEmail: result.data.email,
     specializationsByCategory: JSON.stringify(specializationsByCategory),
     citiesByProvince: JSON.stringify(citiesByProvince),
+    limits,
   });
 }
 
@@ -228,6 +231,8 @@ export async function submitContactForm(req: Request, res: Response) {
 }
 
 export async function startCheckout(req: Request, res: Response) {
+  req.log.info({ body: req.body }, "startCheckout payload");
+
   const updateTiers = await updateDraftTiers(req.sessionId, req.body);
 
   if (!updateTiers.success) {
@@ -236,24 +241,65 @@ export async function startCheckout(req: Request, res: Response) {
     });
   }
 
+  req.log.info("Tiers changed successfully");
+
   const checkoutResult = await startSessionPayment(req.sessionId);
 
   if (!checkoutResult.success) {
+    req.log.error(
+      {
+        sessionId: req.sessionId,
+        tierChoices: req.body,
+        reason: checkoutResult.error.reason,
+      },
+      "checkout failed",
+    );
+  } else {
+    req.log.info(
+      {
+        sessionId: req.sessionId,
+        tierChoices: req.body,
+        kind: checkoutResult.data.kind,
+        amount: checkoutResult.data.amount,
+        checkoutUrl:
+          checkoutResult.data.kind === "checkout"
+            ? checkoutResult.data.checkoutUrl
+            : null,
+      },
+      "checkout started",
+    );
+  }
+  if (!checkoutResult.success) {
+    req.log.info("Checkout result not successful");
     return res.render("jobs/drafts", { actionError: "Something went wrong." });
   }
 
   if (checkoutResult.data.kind === "free") {
     const result = await submitDrafts(req.sessionId);
     if (!result.success) {
+      req.log.info("Free post submission failure");
       return res.status(500).render("jobs/drafts", {
         actionError: "Something went wrong. Please try again.",
       });
     }
+    req.log.info("Free post success");
     return res.render("success", {
       title: "Submitted",
       message: "Your posts are under review. We'll be in touch soon.",
       link: { href: "/jobs/board", label: "View the board" },
     });
+  }
+
+  if (isMockPaymentsEnabled) {
+    req.log.info(
+      { sessionId: req.sessionId },
+      "Directing user to dummy payment page",
+    );
+  } else {
+    req.log.info(
+      { sessionId: req.sessionId },
+      "Directing user to payment provider",
+    );
   }
 
   return res.redirect(checkoutResult.data.checkoutUrl);

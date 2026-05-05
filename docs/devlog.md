@@ -288,3 +288,11 @@ server.closeAllConnections():
 ## 2026-05-01
 
 - Added `docs/backlog.md` to track ongoing work beyond the original plan.
+
+## 2026-05-05
+
+- Reviewed admin approval flow
+- Reviewed email flow. Added dummy email flag. Added more logs.
+- Added stronger field validation, including length limits and live counters.
+- Added z.httpUrl check to Zod for url
+- Added confirmation modals for delete actions

@@ -1,5 +1,14 @@
+  <div class="sticky top-[37px] z-30 bg-blue-200/90">
+    <p
+      href="/jobs/board"
+      class="flex w-full items-center justify-center px-3 py-2 text-sm font-mono uppercase tracking-wider"
+    >
+      Your drafts
+    </p>
+  </div>
+
 <div class="p-4">
-  <form method="POST" action="/jobs/drafts/checkout" class="flex flex-col gap-4 h-dvh">
+  <div class="flex flex-col gap-8">
 
     {{#if actionError}}
       <p class="text-red-500 text-sm border border-red-500 py-1 px-2  inline-block">{{actionError}}</p>
@@ -10,20 +19,15 @@
     {{else}}
 
 
-      <p class="pb-4 font-mono uppercase text-sm inline-flex items-center gap-2">
-        <span class="block size-2 rounded-full bg-red-500"></span>Your Drafts
-      </p>
-
-
-        <div class="flex flex-col gap-8">
+        <div class="flex flex-col gap-4">
           {{#each drafts}}
-            <div class="border border-slate-300">
-              <div class="md:flex md:flex-row">
+            <div class="border border-slate-200 p-2">
+              <div class="md:flex md:flex-row border mb-2">
                 <div class="md:flex-1 md:flex md:flex-col p-4 pb-0 md:pb-4">
                   <div class="text-xl mb-2">{{heading}}</div>
                   <div>{{subheading}}</div>
                 </div>
-                <div class="flex flex-col gap-1 md:w-60 p-4 font-mono uppercase text-sm">
+                <div class="flex flex-col gap-1 md:w-60 p-4 font-mono uppercase text-sm tracking-wide">
                   <span><i class="ph ph-read-cv-logo mr-2"></i>{{specialization}}</span>
                   <span><i class="ph ph-calendar-dot mr-2"></i>{{startDate}}</span>
                   <span><i class="ph ph-map-pin-area mr-2"></i>{{city}}, {{province}}</span>
@@ -31,22 +35,23 @@
                 </div>
               </div>
 
-                  <fieldset class="p-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <fieldset>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                       <label class="cursor-pointer h-full">
                         <input
                           type="radio"
                           name="{{this.id}}"
                           value="standard"
+                          form="drafts-checkout-form"
                           class="sr-only peer"
                           {{#if (eq this.tier "pinned")}}{{else}}checked{{/if}}
                         />
-                        <div class="flex flex-col h-full px-3 py-2  border border-[#CBCCCE] bg-[#CBCCCE]/60 text-[#0D0D0D] peer-checked:border-[#41C3DD] peer-checked:bg-white peer-checked:text-[#0D0D0D]">
-                          <div class="flex justify-between text-lg mb-1">
+                        <div class="flex flex-col h-full px-3 py-2  border border-slate-200 peer-checked:border-black peer-checked:bg-white peer-checked:text-black">
+                          <div class="flex justify-between mb-1 text-lg">
                             <span class="uppercase">Standard</span>
                             <span>Free</span>
                           </div>
-                          <ul class="text-sm text-[#0D0D0D]">
+                          <ul class="flex flex-col gap-2 mt-2">
                             <li>Listed for thirty days</li>
                             <li>Management link</li>
                           </ul>
@@ -57,48 +62,70 @@
                           type="radio"
                           name="{{this.id}}"
                           value="pinned"
+                          form="drafts-checkout-form"
                           class="sr-only peer"
                           {{#if (eq this.tier "pinned")}}checked{{/if}}
                         />
-                        <div class="flex flex-col h-full px-3 py-2  border border-[#CBCCCE] bg-[#CBCCCE]/60 text-[#0D0D0D] peer-checked:border-[#41C3DD] peer-checked:bg-white peer-checked:text-[#0D0D0D]">
+                        <div class="flex flex-col h-full px-3 py-2 border border-slate-200 peer-checked:border-black peer-checked:bg-white peer-checked:text-black">
                           <div class="flex justify-between text-lg mb-1">
                             <span class="uppercase">Pinned</span>
                             <span>$10</span>
                           </div>
-                          <ul class="text-sm text-[#0D0D0D]">
-                            <li><i class="ph ph-check text-[#41C3DD] mr-2"></i>Pinned to the top of all listings</li>
-                            <li><i class="ph ph-check text-[#41C3DD] mr-2"></i>Pinned for thirty days</li>
-                            <li><i class="ph ph-check text-[#41C3DD] mr-2"></i>Link management</li>
+                          <ul class="flex flex-col gap-2 mt-2">
+                            <li><i class="ph ph-check text-blue-500 mr-2"></i>Pinned to the top of all listings</li>
+                            <li><i class="ph ph-check text-blue-500 mr-2"></i>Pinned for thirty days</li>
+                            <li><i class="ph ph-check text-blue-500 mr-2"></i>Link management</li>
                           </ul>
                         </div>
                       </label>
                     </div>
                   </fieldset>
-                  <div class="flex px-4 pb-2 gap-4">
-                    <button
-                      type="submit"
-                      class="font-mono uppercase text-sm text-red-500"
-                      formaction="/jobs/drafts/{{this.id}}/delete"
-                      formmethod="POST"
-                    >Delete</button>
+
+                                      <div class="flex flex-row justify-end mt-2">
+                    <form method="POST" action="/jobs/drafts/{{this.id}}/delete">
+                      <button
+                        type="button"
+                        class="font-mono uppercase tracking-wide underline text-sm text-red-500"
+                        data-delete-trigger
+                      >
+                        Delete
+                      </button>
+                    </form>
                   </div>
+
               </div>
 
+
         {{else}}
-          <p class="text-[#0D0D0D] p-4">No drafts yet.</p>
+          <p class="p-4">No drafts yet.</p>
         {{/each}}
       </div>
     {{/if}}
 
-    <div class="flex flex-row gap-4">
-      <a href="/jobs/new" class="flex items-center justify-center border py-1 px-3 font-mono uppercase text-center">{{#unless drafts}}Add a job{{else}}Add another job{{/unless}}</a>
-      <button
-        type="submit"
-        data-checkout-submit
-        class="py-3 px-7 text-center uppercase border flex-1"
-      >Pay and submit</button>
+    <div class="flex flex-row justify-between">
+      <a href="/jobs/new" class="flex items-center justify-center border px-3 py-2 text-sm font-mono tracking-wide uppercase text-center">{{#unless drafts}}Add a job{{else}}Add another job{{/unless}}</a>
+      <form
+        id="drafts-checkout-form"
+        method="POST"
+        action="/jobs/drafts/checkout"
+      >
+        <button
+          type="submit"
+          data-checkout-submit
+          class="px-3 py-2 text-sm font-mono tracking-wide text-center uppercase border"
+        >Pay and submit</button>
+      </form>
     </div>
-  </form>
+  </div>
 </div>
 
+{{> confirm-modal
+  id="delete-draft"
+  title="Delete draft?"
+  message="This draft will be permanently removed."
+  confirmLabel="Delete"
+  cancelLabel="Cancel"
+}}
+
 <script src="/js/payment/calculate.js" defer></script>
+<script src="/js/delete-button.js" defer></script>

@@ -1,34 +1,33 @@
-<form method="GET" action="/jobs/board" class="filter-form">
+<form method="GET" action="/jobs/board" class="filter-form border-b border-slate-200">
   <details class="group">
-    <summary class="p-4 font-mono uppercase text-sm hover:cursor-pointer list-none inline-flex items-center gap-2">
-      <span class="block size-2 rounded-full bg-red-500 group-open:bg-[#41C3DD]"></span>
-      <span class="tracking-wide">Filters{{#if filterCount}} ({{filterCount}}){{/if}}</span>
+    <summary class="list-none inline-flex items-center border border-black bg-white m-4 px-3 py-2 font-mono text-sm uppercase tracking-wider text-black hover:cursor-pointer group-open:bg-black group-open:text-white">
+      <span>Filters{{#if filterCount}} ({{filterCount}}){{/if}}</span>
     </summary>
     <div class="flex flex-col gap-2 pt-4 px-4 pb-4">
-      <p class="flex items-center gap-4 text-2xl font-bold mb-4">Category</p>
+      <p class="flex items-center font-mono tracking-wide gap-4 uppercase mb-4 text-sm">Category</p>
       <div class="flex flex-wrap gap-2">
         {{#each categories}}
           <label class="cursor-pointer">
             <input type="checkbox" name="category" value="{{this}}" class="sr-only peer" {{#if (contains activeCategory this)}}checked{{/if}}>
-            <span class="font-mono uppercase text-sm border border-[#CBCCCE] hover:border-[#0D0D0D]  px-2 py-1.5 peer-checked:bg-[#0D0D0D] peer-checked:text-white peer-checked:border-[#0D0D0D]">{{this}}</span>
+            <span class="font-mono uppercase text-sm border border-[#CBCCCE] hover:border-[#0D0D0D]  px-2 py-1.5 peer-checked:bg-[#0D0D0D] peer-checked:text-white peer-checked:border-[#0D0D0D] tracking-wide">{{this}}</span>
           </label>
         {{/each}}
       </div>
     </div>
     <div class="flex flex-col gap-2 px-4 pb-4">
-      <p class="flex items-center gap-4 text-2xl font-bold my-4">Province</p>
+      <p class="flex items-center gap-4 font-mono tracking-wide uppercase my-4 text-sm">Province</p>
       <div class="flex flex-wrap gap-x-2 gap-y-4">
         {{#each provinces}}
           <label class="cursor-pointer">
             <input type="checkbox" name="province" value="y{{this}}" class="sr-only peer" {{#if (contains activeProvince this)}}checked{{/if}}>
-            <span class="font-mono uppercase text-sm border border-[#CBCCCE] hover:border-[#0D0D0D]  px-2 py-1.5 peer-checked:bg-[#0D0D0D] peer-checked:text-white peer-checked:border-[#0D0D0D]">{{this}}</span>
+            <span class="font-mono uppercase text-sm border border-[#CBCCCE] hover:border-[#0D0D0D]  px-2 py-1.5 peer-checked:bg-[#0D0D0D] peer-checked:text-white peer-checked:border-[#0D0D0D] tracking-wide">{{this}}</span>
           </label>
         {{/each}}
       </div>
     </div>
     <div class="flex justify-between items-center mt-4 pb-4 px-4">
-      <button class="inline border py-1 px-3 font-mono uppercase text-sm">Apply filters</button>
-      <a href="/jobs/board" class="font-mono uppercase text-sm hover:cursor-pointer">Reset filters</a>
+      <button class="inline-flex items-center bg-amber-500/80 px-3 py-2 font-mono text-sm uppercase tracking-wider text-white">Apply filters</button>
+      <a href="/jobs/board" class="inline-flex items-center bg-blue-500/80 px-3 py-2 font-mono text-sm uppercase tracking-wider text-white hover:cursor-pointer">Reset filters</a>
     </div>
   </details>
 </form>

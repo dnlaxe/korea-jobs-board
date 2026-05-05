@@ -1,0 +1,15 @@
+<div class="flex flex-col items-center justify-center min-h-screen px-4 pb-48">
+  <h1 class="text-2xl uppercase tracking-wide mb-4">{{title}}</h1>
+  <p class="text-center mb-4">{{message}}</p>
+  {{#if paymentRef}}
+    <p class="text-center mb-8 font-mono text-sm uppercase tracking-wide">
+      Payment reference: {{paymentRef}}
+    </p>
+  {{/if}}
+  {{#if link}}
+    <a
+      href="{{link.href}}"
+      class="border border-[#CBCCCE] py-1 px-3 font-mono uppercase text-sm hover:border-[#0D0D0D]"
+    >{{link.label}}</a>
+  {{/if}}
+</div>

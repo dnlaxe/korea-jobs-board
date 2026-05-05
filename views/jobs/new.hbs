@@ -12,13 +12,13 @@
       <span data-progress-index="2" class="flex-1 h-2 bg-slate-200 transition duration-500"></span>
       <span data-progress-index="3" class="flex-1 h-2 bg-slate-200 transition duration-500"></span>
       <span data-progress-index="4" class="flex-1 h-2 bg-slate-200 transition duration-500"></span>
-      <span data-progress-index="5" class="flex-1 h-2 bg-slate-200"></span>
-      <span data-progress-index="6" class="flex-1 h-2 bg-slate-200"></span>
-      <span data-progress-index="7" class="flex-1 h-2 bg-slate-200"></span>
-      <span data-progress-index="8" class="flex-1 h-2 bg-slate-200"></span>
-      <span data-progress-index="9" class="flex-1 h-2 bg-slate-200"></span>
-      <span data-progress-index="10" class="flex-1 h-2 bg-slate-200"></span>
-      <span data-progress-index="11" class="flex-1 h-2 bg-slate-200"></span>
+      <span data-progress-index="5" class="flex-1 h-2 bg-slate-200 transition duration-500"></span>
+      <span data-progress-index="6" class="flex-1 h-2 bg-slate-200 transition duration-500"></span>
+      <span data-progress-index="7" class="flex-1 h-2 bg-slate-200 transition duration-500"></span>
+      <span data-progress-index="8" class="flex-1 h-2 bg-slate-200 transition duration-500"></span>
+      <span data-progress-index="9" class="flex-1 h-2 bg-slate-200 transition duration-500"></span>
+      <span data-progress-index="10" class="flex-1 h-2 bg-slate-200 transition duration-500"></span>
+      <span data-progress-index="11" class="flex-1 h-2 bg-slate-200 transition duration-500"></span>
     </div>
   </div>
 
@@ -143,7 +143,10 @@
           class="sr-only peer"
         />
         <div class="p-4 border border-slate-200 peer-checked:border-black hover:border-black">
+          <div class="flex flex-row justify-between">
           <span class="block">Other language:</span>
+          <div id="otherLanguagesCount">{{limits.OTHER_LANGUAGES_MAX}}</div>
+          </div>
           <input
             id="otherLanguages"
             name="otherLanguages"
@@ -183,9 +186,12 @@
         <div>
           <div class="flex items-center gap-3 mb-2">
             <button type="button" class="btn-back text-xl inline-flex items-center justify-center leading-none shrink-0"><i class="ph ph-arrow-left"></i></button>
-            <label class="text-2xl">Jod description</label>
+            <label class="text-2xl">Job description</label>
           </div>
+          <div class="flex flex-row justify-between">
           <label for="heading">Title</label>
+          <div id="headingCount">{{limits.HEADING_MAX}}</div>
+          </div>
           <input
             id="heading"
             name="heading"
@@ -194,7 +200,10 @@
             value="{{values.heading}}"
           />
 
+          <div class="flex flex-row justify-between">
           <label class="block" for="subheading">Second line</label>
+          <div id="subheadingCount">{{limits.SUBHEADING_MAX}}</div>
+          </div>
           <input
             id="subheading"
             name="subheading"
@@ -203,7 +212,10 @@
             value="{{values.subheading}}"
           />
 
+          <div class="flex flex-row justify-between">
           <label for="fullDescription">Detailed description</label>
+          <div id="fullDescriptionCount">{{limits.FULL_DESCRIPTION_MAX}}</div>
+          </div>
           <textarea
             class="block w-full h-[40%] px-3 py-2  border border-[#CBCCCE] resize-none"
             id="fullDescription"

@@ -25,6 +25,8 @@ const envSchema = z.object({
   BASIC_AUTH_ENABLED: z.stringbool({
     error: "BASIC_AUTH_ENABLED needs to be chosen",
   }),
+  MOCK_PAYMENT: z.coerce.boolean().default(true),
+  MOCK_RELAY_EMAIL: z.coerce.boolean().default(true),
 });
 
 const parsed = envSchema.safeParse(process.env);

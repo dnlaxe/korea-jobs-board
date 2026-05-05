@@ -10,6 +10,7 @@ import { Request, Response } from "express";
 import jobsRouter from "./features/jobs/jobs.routes.js";
 import adminRouter from "./features/admin/admin.routes.js";
 import manageRouter from "./features/manage/manage.routes.js";
+import paymentRouter from "./features/payment/payment.routes.js";
 import { sql } from "drizzle-orm";
 import { db } from "./db/db.js";
 import cookieParser from "cookie-parser";
@@ -46,6 +47,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(jobsRouter);
+app.use(paymentRouter);
 
 if (!isBasicAuthEnabled) {
   app.use("/admin", requireBasicAuth);
