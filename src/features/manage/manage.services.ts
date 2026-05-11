@@ -10,6 +10,7 @@ import { LivePostRow } from "../../types/types.js";
 import { JobFormInput } from "../jobs/jobs.schema.js";
 import { appLogger } from "../../middleware/logger.js";
 import { insertAuditEvents } from "../../repo/audit.repo.js";
+import { emptyLivePostCache } from "../jobs/jobs.cache.js";
 
 export async function getUsersPosts(
   token: string,
@@ -93,6 +94,7 @@ export async function updatePost(
 
   try {
     await updateLivePost(postId, sessionId, data);
+    emptyLivePostCache();
 
     await insertAuditEvents([
       {
@@ -134,6 +136,9 @@ export async function unpublishUserPost(
     if (unpublish.rowCount === 0) {
       return { success: false, error: { reason: "POST_NOT_FOUND" } };
     }
+
+    emptyLivePostCache();
+
     await insertAuditEvents([
       {
         eventType: "post.unpublished",

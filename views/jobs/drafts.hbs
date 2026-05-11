@@ -1,7 +1,7 @@
-  <div class="sticky top-[37px] z-30 bg-blue-200/90">
+  <div>
     <p
       href="/jobs/board"
-      class="flex w-full items-center justify-center px-3 py-2 text-sm font-mono uppercase tracking-wider"
+      class="flex items-center justify-start px-4 py-2 text-sm font-mono uppercase tracking-wider border-b border-slate-200"
     >
       Your drafts
     </p>
@@ -21,10 +21,10 @@
 
         <div class="flex flex-col gap-4">
           {{#each drafts}}
-            <div class="border border-slate-200 p-2">
-              <div class="md:flex md:flex-row border mb-2">
+            <div class="border border-slate-200 bg-slate-50 p-2">
+              <div class="bg-white md:flex md:flex-row border mb-2">
                 <div class="md:flex-1 md:flex md:flex-col p-4 pb-0 md:pb-4">
-                  <div class="text-xl mb-2">{{heading}}</div>
+                  <div class="text-xl mb-2 font-[500]">{{heading}}</div>
                   <div>{{subheading}}</div>
                 </div>
                 <div class="flex flex-col gap-1 md:w-60 p-4 font-mono uppercase text-sm tracking-wide">
@@ -48,7 +48,7 @@
                         />
                         <div class="flex flex-col h-full px-3 py-2  border border-slate-200 peer-checked:border-black peer-checked:bg-white peer-checked:text-black">
                           <div class="flex justify-between mb-1 text-lg">
-                            <span class="uppercase">Standard</span>
+                            <span class="uppercase font-semibold">Standard</span>
                             <span>Free</span>
                           </div>
                           <ul class="flex flex-col gap-2 mt-2">
@@ -68,7 +68,7 @@
                         />
                         <div class="flex flex-col h-full px-3 py-2 border border-slate-200 peer-checked:border-black peer-checked:bg-white peer-checked:text-black">
                           <div class="flex justify-between text-lg mb-1">
-                            <span class="uppercase">Pinned</span>
+                            <span class="uppercase font-semibold">Pinned</span>
                             <span>$10</span>
                           </div>
                           <ul class="flex flex-col gap-2 mt-2">
@@ -85,7 +85,7 @@
                     <form method="POST" action="/jobs/drafts/{{this.id}}/delete">
                       <button
                         type="button"
-                        class="font-mono uppercase tracking-wide underline text-sm text-red-500"
+                        class="font-mono uppercase tracking-wide text-sm text-red-500 border border-red-500 px-3 py-1 rounded-full"
                         data-delete-trigger
                       >
                         Delete

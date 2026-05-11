@@ -5,50 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1773034126943,
-      "tag": "0000_absent_bill_hollister",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1773306046377,
-      "tag": "0001_sweet_sunset_bain",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1773386434299,
-      "tag": "0002_worthless_bloodstorm",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1773478854103,
-      "tag": "0003_mushy_gateway",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1773478881645,
-      "tag": "0004_vengeful_vertigo",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1774592484491,
-      "tag": "0005_mature_lord_hawal",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "7",
-      "when": 1774595134542,
-      "tag": "0006_harsh_shinobi_shaw",
+      "when": 1778225567861,
+      "tag": "0000_round_shinko_yamashiro",
       "breakpoints": true
     }
   ]

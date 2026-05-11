@@ -169,6 +169,7 @@ export async function getForm(req: Request, res: Response) {
       specializationsByCategory: JSON.stringify(specializationsByCategory),
       citiesByProvince: JSON.stringify(citiesByProvince),
       actionError: "Something went wrong. Please try again.",
+      limits,
     });
   }
 
@@ -187,7 +188,7 @@ export async function showJobDetails(req: Request, res: Response) {
   const post = await getLivePost(slug);
 
   if (!post.success) {
-    return res.status(404).render("error");
+    return res.status(404).render("errors/404");
   }
 
   res.render("jobs/details", {
@@ -282,6 +283,9 @@ export async function startCheckout(req: Request, res: Response) {
         actionError: "Something went wrong. Please try again.",
       });
     }
+
+    res.locals.draftsCount = 0;
+
     req.log.info("Free post success");
     return res.render("success", {
       title: "Submitted",

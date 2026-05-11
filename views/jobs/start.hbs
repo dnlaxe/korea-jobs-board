@@ -1,5 +1,5 @@
 {{! views/jobs/start.hbs }}
-<div class="max-w-2xl mx-auto w-full flex flex-col justify-center pb-48 h-full">
+<div class="flex flex-1 items-center justify-center px-4 py-8">
 
   {{#if actionError}}
     <p
@@ -7,7 +7,7 @@
     >{{actionError}}</p>
   {{/if}}
 
-  <form action="/jobs/start" method="POST" class="p-8">
+  <form action="/jobs/start" method="POST" class="w-full max-w-xl mb-24">
     <div>
       <h1 class="text-3xl mb-6 font-semibold">Let's create your job post</h1>
     </div>
@@ -29,10 +29,10 @@
         >{{fieldErrors.email.[0]}}</div>
       {{/if}}
     </div>
-    <div class="flex mt-8">
+    <div class="flex mt-4">
       <button
         type="submit"
-        class="border border-slate-200 py-1 px-3 font-mono uppercase tracking-wide hover:border-black ml-auto"
+        class="border border-slate-200 py-2 px-3 font-mono uppercase text-sm tracking-wide hover:border-black ml-auto"
       >Continue</button>
     </div>
   </form>

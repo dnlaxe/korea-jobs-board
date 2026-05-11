@@ -26,7 +26,10 @@ process.on("unhandledRejection", (reason) => {
 try {
   await pool.query("SELECT 1");
   appLogger.info("DB ready");
-  appLogger.info({ port: config.port }, "Server listening on port");
+  appLogger.info(
+    { port: config.port },
+    `Server listening on port ${config.port}`,
+  );
 } catch (err) {
   appLogger.error({ err }, "Startup check failed. Killing process.");
   appLogger.flush();

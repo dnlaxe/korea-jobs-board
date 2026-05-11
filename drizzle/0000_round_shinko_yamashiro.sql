@@ -1,14 +1,27 @@
 CREATE TYPE "public"."contact_method" AS ENUM('link', 'relay');--> statement-breakpoint
-CREATE TYPE "public"."pending_session_status" AS ENUM('pending_review', 'approved', 'rejected');--> statement-breakpoint
+CREATE TYPE "public"."pending_session_status" AS ENUM('draft', 'pending_review', 'approved', 'rejected');--> statement-breakpoint
 CREATE TYPE "public"."live_post_status" AS ENUM('active', 'expired', 'pending_review', 'unpublished');--> statement-breakpoint
-CREATE TYPE "public"."payment_status" AS ENUM('holding', 'captured', 'cancelled');--> statement-breakpoint
+CREATE TYPE "public"."payment_status" AS ENUM('awaiting', 'initiated', 'holding', 'captured', 'cancelled');--> statement-breakpoint
 CREATE TYPE "public"."relay_message_status" AS ENUM('pending', 'sent', 'rejected');--> statement-breakpoint
 CREATE TYPE "public"."tier_options" AS ENUM('standard', 'pinned', 'featured');--> statement-breakpoint
+CREATE TABLE "audit_events" (
+	"id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "audit_events_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 1 CACHE 1),
+	"event_type" text NOT NULL,
+	"actor_type" text NOT NULL,
+	"entity_type" text NOT NULL,
+	"entity_id" integer,
+	"session_id" integer,
+	"post_id" integer,
+	"message" text NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"metadata" jsonb
+);
+--> statement-breakpoint
 CREATE TABLE "pending_session" (
 	"id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "pending_session_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 1 CACHE 1),
 	"token" text NOT NULL,
 	"email" text,
-	"status" "pending_session_status" DEFAULT 'pending_review' NOT NULL,
+	"status" "pending_session_status" DEFAULT 'draft' NOT NULL,
 	"approved_at" timestamp with time zone,
 	"rejected_at" timestamp with time zone,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
@@ -33,8 +46,8 @@ CREATE TABLE "live_posts" (
 	"contract_type" text NOT NULL,
 	"province" text NOT NULL,
 	"city" text NOT NULL,
-	"korean_proficiency" integer NOT NULL,
-	"english_proficiency" integer NOT NULL,
+	"korean_proficiency" text NOT NULL,
+	"english_proficiency" text NOT NULL,
 	"other_languages" text,
 	"visa_sponsorship" text NOT NULL,
 	"start_date" text NOT NULL,
@@ -45,7 +58,8 @@ CREATE TABLE "live_posts" (
 	"published_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"expires_at" timestamp with time zone NOT NULL,
-	"unpublished_at" timestamp with time zone
+	"unpublished_at" timestamp with time zone,
+	"view_count" integer DEFAULT 0 NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "magic_tokens" (
@@ -63,11 +77,13 @@ CREATE TABLE "payments" (
 	"id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "payments_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 1 CACHE 1),
 	"session_id" integer,
 	"email" text NOT NULL,
-	"status" "payment_status" DEFAULT 'holding' NOT NULL,
+	"status" "payment_status" DEFAULT 'awaiting' NOT NULL,
+	"payment_ref" text NOT NULL,
 	"payment_id" text NOT NULL,
 	"payment_intent_id" text NOT NULL,
 	"amount" integer NOT NULL,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	CONSTRAINT "payments_payment_ref_unique" UNIQUE("payment_ref"),
 	CONSTRAINT "payments_payment_id_unique" UNIQUE("payment_id"),
 	CONSTRAINT "payments_payment_intent_id_unique" UNIQUE("payment_intent_id")
 );
@@ -85,8 +101,8 @@ CREATE TABLE "pending_post" (
 	"contract_type" text NOT NULL,
 	"province" text NOT NULL,
 	"city" text NOT NULL,
-	"korean_proficiency" integer NOT NULL,
-	"english_proficiency" integer NOT NULL,
+	"korean_proficiency" text NOT NULL,
+	"english_proficiency" text NOT NULL,
 	"other_languages" text,
 	"visa_sponsorship" text NOT NULL,
 	"start_date" text NOT NULL,

@@ -11,8 +11,7 @@ import jobsRouter from "./features/jobs/jobs.routes.js";
 import adminRouter from "./features/admin/admin.routes.js";
 import manageRouter from "./features/manage/manage.routes.js";
 import paymentRouter from "./features/payment/payment.routes.js";
-import { sql } from "drizzle-orm";
-import { db } from "./db/db.js";
+import healthRouter from "./features/health/health.routes.js";
 import cookieParser from "cookie-parser";
 import rateLimiterMiddleware from "./middleware/rateLimiter.js";
 import { requireBasicAuth } from "./middleware/basicAuth.js";
@@ -46,6 +45,7 @@ if (isBasicAuthEnabled) {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(healthRouter);
 app.use(jobsRouter);
 app.use(paymentRouter);
 
@@ -79,11 +79,6 @@ app.engine(
 
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "../views"));
-
-app.get("/db-check", async (_req, res) => {
-  const result = await db.execute(sql`select now() as now`);
-  res.json(result.rows);
-});
 
 app.get("/", (req: Request, res: Response) => {
   res.render("pages/board");

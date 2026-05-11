@@ -52,6 +52,9 @@ export const jobFormSchema = z
 
     fullDescription: z
       .string({ error: "Full description is required" })
+      .overwrite((value) =>
+        typeof value === "string" ? value.replace(/\r\n/g, "\n") : value,
+      )
       .trim()
       .min(1)
       .max(limits.FULL_DESCRIPTION_MAX),

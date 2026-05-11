@@ -31,6 +31,8 @@ export async function completeDummyPayment(req: Request, res: Response) {
     });
   }
 
+  res.locals.draftsCount = 0;
+
   return res.render("payments/success", {
     title: "Payment received",
     message: "Your posts were submitted and are now under review.",

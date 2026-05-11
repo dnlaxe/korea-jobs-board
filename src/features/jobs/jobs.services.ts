@@ -21,6 +21,11 @@ import {
 } from "../../repo/session.repo.js";
 import { insertRelayMessage } from "../../repo/relay-message.repo.js";
 import { insertAuditEvents } from "../../repo/audit.repo.js";
+import {
+  emptyLivePostCache,
+  getCachedLivePosts,
+  setCachedLivePosts,
+} from "./jobs.cache.js";
 
 export async function storeDraftPost(
   data: JobFormInput & { sessionId: number; contactEmail?: string | null },
@@ -87,26 +92,35 @@ export async function getLivePosts(
           "post expired",
         );
       });
-    }
-    await insertAuditEvents(
-      expiredPosts.map((post) => ({
-        eventType: "post.expired",
-        actorType: "system",
-        entityType: "live_post",
-        entityId: post.id,
-        sessionId: post.sessionId,
-        postId: post.id,
-        message: "Post expired automatically",
-        metadata: {
-          slug: post.slug,
-          heading: post.heading,
-          scheduledExpiresAt: post.expiresAt,
-          source: "lazy_expiration",
-        },
-      })),
-    );
 
-    let posts = await getAllLivePosts();
+      await insertAuditEvents(
+        expiredPosts.map((post) => ({
+          eventType: "post.expired",
+          actorType: "system",
+          entityType: "live_post",
+          entityId: post.id,
+          sessionId: post.sessionId,
+          postId: post.id,
+          message: "Post expired automatically",
+          metadata: {
+            slug: post.slug,
+            heading: post.heading,
+            scheduledExpiresAt: post.expiresAt,
+            source: "lazy_expiration",
+          },
+        })),
+      );
+
+      emptyLivePostCache();
+    }
+
+    let posts = getCachedLivePosts();
+
+    if (!posts) {
+      posts = await getAllLivePosts();
+      setCachedLivePosts(posts);
+    }
+
     if (category && category.length !== 0) {
       posts = posts.filter((p) => category.includes(p.category));
     }

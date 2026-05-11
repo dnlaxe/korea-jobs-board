@@ -18,18 +18,15 @@
     />
     <link rel="stylesheet" href="/styles.css" />
   </head>
-  <body class="flex flex-col min-h-screen">
-
-<main class="grow bg-white">
-  <div class="mx-auto flex min-h-full max-w-5xl flex-col">
-    {{> public-navbar}}
-    <div class="flex-1">
-      {{{body}}}
+<body class="flex min-h-screen flex-col">
+  <main class="flex flex-1 bg-white">
+    <div class="mx-auto flex flex-1 max-w-3xl flex-col">
+      {{> public-navbar}}
+      <div class="flex flex-1 flex-col">
+        {{{body}}}
+      </div>
+      {{> public-footer}}
     </div>
-    {{> public-footer}}
-  </div>
-</main>
-
-
-  </body>
+  </main>
+</body>
 </html>

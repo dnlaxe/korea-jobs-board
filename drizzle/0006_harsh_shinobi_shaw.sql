@@ -1,1 +1,0 @@
-ALTER TABLE "pending_session" ALTER COLUMN "status" SET DEFAULT 'draft';

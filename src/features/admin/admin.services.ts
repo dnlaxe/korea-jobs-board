@@ -30,6 +30,7 @@ import {
 } from "../../repo/relay-message.repo.js";
 import { appLogger } from "../../middleware/logger.js";
 import { getLogs, insertAuditEvents } from "../../repo/audit.repo.js";
+import { emptyLivePostCache } from "../jobs/jobs.cache.js";
 
 export async function fetchPendingSessions(): Promise<Result<SessionRow[]>> {
   try {
@@ -163,6 +164,8 @@ export async function approveSessionByAdmin(
       ]);
     }
 
+    emptyLivePostCache();
+
     appLogger.info(
       { sessionId, jobCount: jobs.length },
       "approveSessionByAdmin all live posts inserted",
@@ -189,12 +192,18 @@ export async function approveSessionByAdmin(
   manageUrl.searchParams.set("token", magicTokenRow.token);
 
   if (!isMockEmailRelayEnabled) {
-    appLogger.info({ sessionId }, "approveSessionByAdmin sending receipt email");
+    appLogger.info(
+      { sessionId },
+      "approveSessionByAdmin sending receipt email",
+    );
 
     const receipt = await sendReceipt(manageUrl.toString());
 
     if (!receipt.success) {
-      appLogger.error({ sessionId }, "approveSessionByAdmin receipt email failed");
+      appLogger.error(
+        { sessionId },
+        "approveSessionByAdmin receipt email failed",
+      );
       return { success: false, error: { reason: "EMAIL_API_ERROR" } };
     }
 

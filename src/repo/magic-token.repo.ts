@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db/db.js";
 import { magicToken } from "../db/schema.js";
-import { randomBytes } from "crypto";
+import { generate } from "random-words";
 
 export async function createMagicToken(
   email: string,
@@ -9,6 +9,8 @@ export async function createMagicToken(
   expiresAt: Date,
   paymentId?: string | null,
 ) {
+  const token = generate({ exactly: 8, join: "-" });
+
   const [tokenRow] = await db
     .insert(magicToken)
     .values({
@@ -16,7 +18,7 @@ export async function createMagicToken(
       sessionId,
       expiresAt,
       paymentId: paymentId ?? null,
-      token: randomBytes(32).toString("hex"),
+      token: token,
     })
     .returning();
   return tokenRow;

@@ -7,6 +7,17 @@ export function validate(
   viewData?: object,
 ) {
   return (req: Request, res: Response, next: NextFunction) => {
+    const raw =
+      typeof req.body.fullDescription === "string"
+        ? req.body.fullDescription
+        : "";
+
+    req.log.info({
+      rawLength: raw.length,
+      browserEquivalentLength: raw.replace(/\r\n/g, "\n").length,
+      newlineCount: (raw.match(/\r\n/g) ?? []).length,
+    });
+
     const result = schema.safeParse(req.body);
     if (result.success) {
       req.body = result.data;
@@ -24,6 +35,13 @@ export function validate(
       },
       "Validation fails",
     );
-    res.render(view, { ...viewData, ...req.query, ...req.params, ...req.body, fieldErrors, values: req.body });
+    res.render(view, {
+      ...viewData,
+      ...req.query,
+      ...req.params,
+      ...req.body,
+      fieldErrors,
+      values: req.body,
+    });
   };
 }

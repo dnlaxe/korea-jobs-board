@@ -66,7 +66,7 @@
               value="{{values.contactUrl}}"
               class="block w-full px-3 py-2 bg-white border border-slate-200 mt-1"
             />
-            <button type="button" data-step-inline-next>Next</button>
+            <button type="button" data-step-inline-next class="px-3 py-2 font-mono text-sm border uppercase mt-4">Next</button>
           </div>
         </label>
 
@@ -154,7 +154,7 @@
             value="{{values.otherLanguages}}"
             class="block w-full px-3 py-2 border border-slate-200 mt-1"
           />
-          <button type="button" data-step-inline-next>Next</button>
+          <button type="button" data-step-inline-next class="px-3 py-2 font-mono text-sm border uppercase mt-4">Next</button>
         </div>
       </label>
 
@@ -220,13 +220,14 @@
             class="block w-full h-[40%] px-3 py-2  border border-[#CBCCCE] resize-none"
             id="fullDescription"
             name="fullDescription"
+            maxlength="{{limits.FULL_DESCRIPTION_MAX}}"
           >{{values.fullDescription}}</textarea>
-          <button type="button" class="btn-last-next disabled:opacity-50 px-3 py-1 border border-slate-200 uppercase tracking-wide hover:border-black mt-8">Next</button>
+          <button type="button" class="btn-last-next disabled:opacity-50 px-3 py-2 border border-slate-200 uppercase tracking-wide hover:border-black mt-8 text-sm">Next</button>
         </div>
     </div>
 
   <div class="review step" hidden>
-    <button type="submit" class="btn-confirm inline-block tracking-wide border border-slate-200 py-1 px-3 font-mono uppercase hover:border-black">Confirm</button>
+    <button type="submit" class="btn-confirm inline-block tracking-wide border border-slate-200 py-2 px-3 font-mono uppercase hover:border-black text-sm">Confirm</button>
   </div>
 
   <button type="button" class="btn-back-to-review border font-mono tracking-wide uppercase mt-4 py-1 px-4" hidden>Back to review</button>

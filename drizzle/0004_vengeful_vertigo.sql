@@ -1,2 +1,0 @@
-ALTER TABLE "payments" ADD CONSTRAINT "payments_payment_id_unique" UNIQUE("payment_id");--> statement-breakpoint
-ALTER TABLE "payments" ADD CONSTRAINT "payments_payment_intent_id_unique" UNIQUE("payment_intent_id");

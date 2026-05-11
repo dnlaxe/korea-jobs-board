@@ -23,3 +23,22 @@
     font-family: var(--font-mono);
   }
 }
+
+body {
+  overflow-wrap: anywhere;
+}
+
+p,
+li,
+td,
+th,
+blockquote,
+div,
+span,
+a,
+label,
+button,
+textarea,
+input {
+  word-break: break-word;
+}

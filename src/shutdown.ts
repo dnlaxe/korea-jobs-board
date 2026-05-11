@@ -1,15 +1,17 @@
 import { Server } from "node:http";
 import { appLogger } from "./middleware/logger.js";
 import { Pool } from "pg";
+import {
+  isShuttingDown,
+  markShuttingDown,
+} from "./features/health/health.state.js";
 
 const SHUTDOWN_TIMEOUT_MS = 3_000;
 
-let shuttingDown = false;
-
 export default function createShutdownHandler(server: Server, pool: Pool) {
   return function (signal: string) {
-    if (shuttingDown) return;
-    shuttingDown = true;
+    if (isShuttingDown()) return;
+    markShuttingDown();
 
     console.trace("Shutdown handler triggered");
     appLogger.info({ signal }, "Shutdown initiated");

@@ -296,3 +296,15 @@ server.closeAllConnections():
 - Added stronger field validation, including length limits and live counters.
 - Added z.httpUrl check to Zod for url
 - Added confirmation modals for delete actions
+
+## 2026-05-07
+
+- Fixed word count issue in form's text area. Area was counting '\n' as one character when it was being saved as '\r\n' which is two characters. Solution was to regex '\r\n' to just '\n' ands to do it in Zod validation.
+- Fixed issue: saved drafts box still appearing in navbar directly after submission. Solution: setting res.locals.draftsCount = 0 after submitting draft.
+- Replaced randomBytes(32).toString("hex") with random-words npm package.
+
+## 2026-05-08
+
+- created health endpoints
+- created a cache for live job posts
+- added mock posts

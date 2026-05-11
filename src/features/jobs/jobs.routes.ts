@@ -21,6 +21,7 @@ import {
 import {
   citiesByProvince,
   jobFormOptions,
+  limits,
   specializationsByCategory,
 } from "./jobs.constants.js";
 import {
@@ -73,6 +74,7 @@ router.post(
     jobFormOptions,
     specializationsByCategory: JSON.stringify(specializationsByCategory),
     citiesByProvince: JSON.stringify(citiesByProvince),
+    limits,
   }),
   storePendingJob,
 );

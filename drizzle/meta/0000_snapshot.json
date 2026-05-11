@@ -1,9 +1,94 @@
 {
-  "id": "ab0f88e4-caa2-4595-a7c8-4f3d47d44f28",
+  "id": "d36188c5-c249-4100-b17e-0a9a34c6f918",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.audit_events": {
+      "name": "audit_events",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "audit_events_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "event_type": {
+          "name": "event_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "actor_type": {
+          "name": "actor_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "entity_type": {
+          "name": "entity_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "entity_id": {
+          "name": "entity_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "session_id": {
+          "name": "session_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "post_id": {
+          "name": "post_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "message": {
+          "name": "message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "metadata": {
+          "name": "metadata",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.pending_session": {
       "name": "pending_session",
       "schema": "",
@@ -43,7 +128,7 @@
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
-          "default": "'pending_review'"
+          "default": "'draft'"
         },
         "approved_at": {
           "name": "approved_at",
@@ -204,13 +289,13 @@
         },
         "korean_proficiency": {
           "name": "korean_proficiency",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "english_proficiency": {
           "name": "english_proficiency",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -283,6 +368,13 @@
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": false
+        },
+        "view_count": {
+          "name": "view_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
         }
       },
       "indexes": {},
@@ -474,7 +566,13 @@
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
-          "default": "'holding'"
+          "default": "'awaiting'"
+        },
+        "payment_ref": {
+          "name": "payment_ref",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
         },
         "payment_id": {
           "name": "payment_id",
@@ -520,6 +618,13 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
+        "payments_payment_ref_unique": {
+          "name": "payments_payment_ref_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "payment_ref"
+          ]
+        },
         "payments_payment_id_unique": {
           "name": "payments_payment_id_unique",
           "nullsNotDistinct": false,
@@ -629,13 +734,13 @@
         },
         "korean_proficiency": {
           "name": "korean_proficiency",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "english_proficiency": {
           "name": "english_proficiency",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -812,6 +917,7 @@
       "name": "pending_session_status",
       "schema": "public",
       "values": [
+        "draft",
         "pending_review",
         "approved",
         "rejected"
@@ -831,6 +937,8 @@
       "name": "payment_status",
       "schema": "public",
       "values": [
+        "awaiting",
+        "initiated",
         "holding",
         "captured",
         "cancelled"
