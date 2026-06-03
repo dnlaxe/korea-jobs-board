@@ -1,6 +1,19 @@
 import { env } from "./env.js";
 
-export const config = {
+interface Config {
+  port: number;
+  node_env: "development" | "production" | "test";
+  db_url: string;
+  resend_api: string;
+  base_url: string;
+  admin_username: string;
+  admin_password: string;
+  basic_auth: boolean;
+  mock_payments: boolean;
+  mock_email_relay: boolean;
+}
+
+export const config: Readonly<Config> = {
   port: env.PORT,
   node_env: env.NODE_ENV,
   db_url: env.DATABASE_URL,
