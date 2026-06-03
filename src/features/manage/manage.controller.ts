@@ -61,7 +61,7 @@ export async function unpublishPost(req: Request, res: Response) {
   const token = req.query.token as string;
   const result = await unpublishUserPost(id, token);
 
-  if (!result.success) {
+  if (result.success === false) {
     return res.redirect(`/manage?token=${token}&error=deletion_failed`);
   }
 
