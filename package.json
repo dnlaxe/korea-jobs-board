@@ -5,10 +5,10 @@
   "main": "dist/server.js",
   "scripts": {
     "server:dev": "tsx watch src/server.ts",
-    "css:dev": "npx @tailwindcss/cli -i ./src/input.css -o ./public/styles.css --watch",
+    "css:dev": "npx @tailwindcss/cli -i ./src/input.css -o ./public/css/styles.css --watch",
     "dev": "concurrently -n server,css \"npm:server:dev\" \"npm:css:dev\"",
     "build:server": "tsc",
-    "build:css": "npx @tailwindcss/cli -i ./src/input.css -o ./public/styles.css",
+    "build:css": "npx @tailwindcss/cli -i ./src/input.css -o ./public/css/styles.css",
     "build": "npm run build:server && npm run build:css",
     "start": "node dist/server.js",
     "lint": "eslint .",

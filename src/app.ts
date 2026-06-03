@@ -13,7 +13,7 @@ import manageRouter from "./features/manage/manage.routes.js";
 import paymentRouter from "./features/payment/payment.routes.js";
 import healthRouter from "./features/health/health.routes.js";
 import cookieParser from "cookie-parser";
-import rateLimiterMiddleware from "./middleware/rateLimiter.js";
+// import rateLimiterMiddleware from "./middleware/rateLimiter.js";
 import { requireBasicAuth } from "./middleware/basicAuth.js";
 import {
   globalErrorHandler,
