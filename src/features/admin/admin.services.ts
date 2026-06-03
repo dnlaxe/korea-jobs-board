@@ -123,7 +123,7 @@ export async function approveSessionByAdmin(
 
     for (const job of jobs) {
       const slugResult = await generateUniqueSlug(job);
-      if (!slugResult.success) return slugResult;
+      if (slugResult.success === false) return slugResult;
       const tier = job.tier;
 
       await insertLivePost(
