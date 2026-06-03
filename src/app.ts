@@ -26,7 +26,7 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 if (isProduction) {
-  app.set("trust proxy", 1);
+  app.set("trust proxy", true);
 }
 
 app.use(express.static("public"));
