@@ -1,7 +1,7 @@
 import express from "express";
 import { isBasicAuthEnabled, isProduction } from "./config/config.js";
 import { logger } from "./middleware/logger.js";
-import helmet from "helmet";
+import * as helmet from "helmet";
 import compression from "compression";
 import { engine } from "express-handlebars";
 import path from "path";
