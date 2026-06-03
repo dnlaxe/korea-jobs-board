@@ -11,7 +11,7 @@
     ],
     "functions": {
         "src/app.ts": {
-            "includeFiles": "views/**"
+            "includeFiles": "views/**/*.{hbs,html,css}"
         }
     }
 }

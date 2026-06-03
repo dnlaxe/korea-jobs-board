@@ -61,8 +61,8 @@ app.engine(
   engine({
     extname: ".hbs",
     defaultLayout: "main",
-    layoutsDir: path.join(process.cwd(), "views/layouts"),
-    partialsDir: path.join(process.cwd(), "views/partials"),
+    layoutsDir: path.join(__dirname, "../views/layouts"),
+    partialsDir: path.join(__dirname, "../views/partials"),
     helpers: {
       eq: (a: unknown, b: unknown) => a === b,
       toString: (x: number) => String(x),
