@@ -31,7 +31,7 @@ if (isProduction) {
 
 app.use(express.static("public"));
 
-app.use(helmet());
+app.use(helmet({ contentSecurityPolicy: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(logger);
 app.use(compression());
