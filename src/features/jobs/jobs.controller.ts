@@ -25,7 +25,7 @@ import { isMockPaymentsEnabled } from "../../config/config.js";
 export async function storeGatewayEmail(req: Request, res: Response) {
   const { email } = req.body;
   const result = await addEmailToSession(req.sessionId, email);
-  if (!result.success) {
+  if (result.success === false) {
     return res.status(500).render("jobs/start", {
       actionError: "Something went wrong. Please try again.",
     });
@@ -73,7 +73,7 @@ export async function storePendingJob(req: Request, res: Response) {
     fullDescription,
   });
 
-  if (!result.success) {
+  if (result.success === false) {
     return res.status(500).render("jobs/new", {
       jobFormOptions,
       values: req.body,
@@ -90,7 +90,7 @@ export async function storePendingJob(req: Request, res: Response) {
 export async function showSessionDrafts(req: Request, res: Response) {
   const result = await getSessionDrafts(req.sessionId);
 
-  if (!result.success) {
+  if (result.success === false) {
     res.status(500).render("jobs/drafts", { loadError: true });
     return;
   }
@@ -101,7 +101,7 @@ export async function showSessionDrafts(req: Request, res: Response) {
 
 // export async function submitSessionDrafts(req: Request, res: Response) {
 //   const result = await submitDrafts(req.sessionId);
-//   if (!result.success) {
+//   if (result.success === false) {
 //     return res.status(500).render("jobs/drafts", {
 //       actionError: "Something went wrong. Please try again.",
 //     });
@@ -116,7 +116,7 @@ export async function showSessionDrafts(req: Request, res: Response) {
 export async function deleteDraft(req: Request, res: Response) {
   const id = Number(req.params.id);
   const result = await removeDraft(id, req.sessionId);
-  if (!result.success) {
+  if (result.success === false) {
     return res.status(500).render("jobs/drafts", {
       actionError: "Something went wrong. Please try again.",
     });
@@ -134,7 +134,7 @@ export async function showBoard(req: Request, res: Response) {
     (Array.isArray(category) ? category.length : category ? 1 : 0) +
     (Array.isArray(province) ? province.length : province ? 1 : 0);
 
-  if (!result.success) {
+  if (result.success === false) {
     return res.status(500).render("jobs/board", {
       loadError: true,
       categories,
@@ -163,7 +163,7 @@ export async function showBoard(req: Request, res: Response) {
 export async function getForm(req: Request, res: Response) {
   const result = await getSession(req.sessionId);
 
-  if (!result.success) {
+  if (result.success === false) {
     return res.status(500).render("jobs/new", {
       jobFormOptions,
       specializationsByCategory: JSON.stringify(specializationsByCategory),
@@ -212,7 +212,7 @@ export async function submitContactForm(req: Request, res: Response) {
   const applicationData = req.body;
   const result = await submitApplicationForApproval(applicationData);
 
-  if (!result.success) {
+  if (result.success === false) {
     return res.render("jobs/contact", {
       actionError: "Something went wrong.",
       values: {
@@ -277,7 +277,7 @@ export async function startCheckout(req: Request, res: Response) {
 
   if (checkoutResult.data.kind === "free") {
     const result = await submitDrafts(req.sessionId);
-    if (!result.success) {
+    if (result.success === false) {
       req.log.info("Free post submission failure");
       return res.status(500).render("jobs/drafts", {
         actionError: "Something went wrong. Please try again.",
@@ -316,7 +316,7 @@ export async function loadDraftsForView(
 ) {
   const result = await getSessionDrafts(req.sessionId);
 
-  if (!result.success) {
+  if (result.success === false) {
     return res.status(500).render("jobs/drafts", { loadError: true });
   }
 

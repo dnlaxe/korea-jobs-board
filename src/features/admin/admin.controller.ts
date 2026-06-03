@@ -15,7 +15,7 @@ import {
 export async function showPendingPosts(_req: Request, res: Response) {
   const result = await fetchPendingSessions();
 
-  if (!result.success) {
+  if (result.success === false) {
     return res.status(500).render("admin/queue", { actionError: "Something went wrong. Please try again." });
   }
 
@@ -26,7 +26,7 @@ export async function showSessionPosts(req: Request, res: Response) {
   const id = Number(req.params.id);
   const result = await fetchSessionPosts(id);
 
-  if (!result.success) {
+  if (result.success === false) {
     return res.status(500).render("admin/queue", {
       actionError: "Something went wrong. Please try again.",
     });
@@ -42,7 +42,7 @@ export async function approveSession(req: Request, res: Response) {
   const id = Number(req.params.id);
   const result = await approveSessionByAdmin(id);
 
-  if (!result.success) {
+  if (result.success === false) {
     return res.status(500).render("admin/queue", { actionError: "Something went wrong. Please try again." });
   }
 
@@ -53,7 +53,7 @@ export async function rejectSession(req: Request, res: Response) {
   const id = Number(req.params.id);
   const result = await rejectSessionByAdmin(id);
 
-  if (!result.success) {
+  if (result.success === false) {
     return res.status(500).render("admin/queue", { actionError: "Something went wrong. Please try again." });
   }
 
@@ -63,7 +63,7 @@ export async function rejectSession(req: Request, res: Response) {
 export async function showLivePosts(_req: Request, res: Response) {
   const result = await fetchLivePosts();
 
-  if (!result.success) {
+  if (result.success === false) {
     return res.status(500).render("admin/liveposts", { actionError: "Something went wrong. Please try again." });
   }
 
@@ -74,7 +74,7 @@ export async function showLivePostDetail(req: Request, res: Response) {
   const id = Number(req.params.id);
   const result = await fetchLivePostById(id);
 
-  if (!result.success) {
+  if (result.success === false) {
     return res.status(500).render("admin/liveposts", { actionError: "Something went wrong. Please try again." });
   }
 
@@ -84,7 +84,7 @@ export async function showLivePostDetail(req: Request, res: Response) {
 export async function showPendingRelayMessages(_req: Request, res: Response) {
   const result = await getPendingRelayMessages();
 
-  if (!result.success) {
+  if (result.success === false) {
     return res.status(500).render("admin/relay", { actionError: "Something went wrong. Please try again." });
   }
 
@@ -95,7 +95,7 @@ export async function rejectRelayMessage(req: Request, res: Response) {
   const id = Number(req.params.id);
   const result = await rejectRelayMessageByAdmin(id);
 
-  if (!result.success) {
+  if (result.success === false) {
     return res.status(500).render("admin/relay", { actionError: "Something went wrong. Please try again." });
   }
 
@@ -107,7 +107,7 @@ export async function approveRelayMessage(req: Request, res: Response) {
   const id = Number(req.params.id);
   const result = await approveRelayMessageByAdmin(id);
 
-  if (!result.success) {
+  if (result.success === false) {
     return res.status(500).render("admin/relay", { actionError: "Something went wrong. Please try again." });
   }
 
@@ -118,7 +118,7 @@ export async function approveRelayMessage(req: Request, res: Response) {
 export async function showLog(_req: Request, res: Response) {
   const result = await getDataForLogs();
 
-  if (!result.success) {
+  if (result.success === false) {
     return res.status(500).render("admin/dashboard", { actionError: "Something went wrong. Please try again." });
   }
 
