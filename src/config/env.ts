@@ -16,7 +16,7 @@ const envSchema = z.object({
     .min(32, { error: "COOKIE_SECRET must be at least 32 characters" }),
   RESEND_API_KEY: z
     .string()
-    .min(36, { error: "RESEND_API_KEY needs to be at least 36 characters long" }),
+    .min(1, { error: "RESEND_API_KEY is required" }),
   BASE_URL: z.url({ error: "BASE_URL must be a valid URL" }),
   ADMIN_USERNAME: z.string().min(1, { error: "ADMIN_USERNAME is required" }),
   ADMIN_PASSWORD: z
