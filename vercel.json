@@ -2,11 +2,8 @@
     "version": 2,
     "routes": [
         {
-            "src": "/css/(.*)",
-            "dest": "/css/$1"
-        },
-        {
             "src": "/(.*)",
+            "check": true,
             "dest": "src/app.ts"
         }
     ],
