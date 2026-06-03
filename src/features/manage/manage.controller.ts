@@ -12,7 +12,7 @@ export async function showUserDashboard(req: Request, res: Response) {
   const token = req.query.token as string;
   const result = await getUsersPosts(token);
 
-  if (!result.success) {
+  if (result.success === false) {
     if (
       result.error.reason === "TOKEN_EXPIRED" ||
       result.error.reason === "TOKEN_NOT_FOUND"
@@ -30,7 +30,7 @@ export async function showEditform(req: Request, res: Response) {
   const postId = Number(req.params.id);
   const result = await getPostToEdit(postId, token);
 
-  if (!result.success) {
+  if (result.success === false) {
     return res.redirect(`/manage?token=${token}&error=post_not_found`);
   }
 
@@ -49,7 +49,7 @@ export async function submitEditform(req: Request, res: Response) {
   const postId = Number(req.params.id);
 
   const result = await updatePost(postId, token, req.body);
-  if (!result.success) {
+  if (result.success === false) {
     return res.redirect(`/manage?token=${token}&error=update_failed`);
   }
 
