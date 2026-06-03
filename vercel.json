@@ -1,14 +1,17 @@
 {
-  "version": 2,
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "src/app.ts"
+    "version": 2,
+    "routes": [
+        {
+            "handle": "filesystem"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "src/app.ts"
+        }
+    ],
+    "functions": {
+        "src/app.ts": {
+            "includeFiles": "views/**"
+        }
     }
-  ],
-  "functions": {
-    "src/app.ts": {
-      "includeFiles": "views/**"
-    }
-  }
 }
