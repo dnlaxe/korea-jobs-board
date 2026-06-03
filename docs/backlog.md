@@ -46,4 +46,5 @@
 - Emails still send to a hardcoded address instead of the intended recipients
 - Payment flow is still dummy or incomplete
 - Session approval can leave partial state if a later step fails
+
 - Post expiration currently happens lazily when the board is loaded
