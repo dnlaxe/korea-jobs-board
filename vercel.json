@@ -2,7 +2,9 @@
     "version": 2,
     "routes": [
         {
-            "handle": "filesystem"
+            "src": "/(.*)",
+            "check": true,
+            "dest": "src/app.ts"
         },
         {
             "src": "/(.*)",
@@ -11,7 +13,7 @@
     ],
     "functions": {
         "src/app.ts": {
-            "includeFiles": "views/**/*.{hbs,html,css}"
+            "includeFiles": "views/**/*"
         }
     }
 }
