@@ -36,7 +36,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(logger);
 app.use(compression());
 app.disable("x-powered-by");
-app.use(rateLimiterMiddleware);
+// app.use(rateLimiterMiddleware);
 
 if (isBasicAuthEnabled) {
   app.use(requireBasicAuth);
