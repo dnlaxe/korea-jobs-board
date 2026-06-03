@@ -246,7 +246,7 @@ export async function startCheckout(req: Request, res: Response) {
 
   const checkoutResult = await startSessionPayment(req.sessionId);
 
-  if (!checkoutResult.success) {
+  if (checkoutResult.success === false) {
     req.log.error(
       {
         sessionId: req.sessionId,
