@@ -6,11 +6,15 @@
 
 ## Current
 
-- Strengthen security around write actions
-- Add automated tests for critical flows
+- Fix manage dashboard
+- Remove last pinned card's bottom border
+- Fix footer on form's review page
+- Align error handling with Vercel logs
 
 ## Next
 
+- Strengthen security around write actions
+- Add automated tests for critical flows
 - Review all manage pages
 - Contact page UI
 - Review Admin dashboard. show metadata from logs
