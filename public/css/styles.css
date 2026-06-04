@@ -6,17 +6,13 @@
     --font-sans: "Roboto", ui-sans-serif, sans-serif;
     --font-mono: "Fragment Mono", ui-monospace, monospace;
     --color-red-500: oklch(63.7% 0.237 25.331);
-    --color-amber-400: oklch(82.8% 0.189 84.429);
+    --color-amber-300: oklch(87.9% 0.169 91.605);
     --color-amber-500: oklch(76.9% 0.188 70.08);
-    --color-amber-800: oklch(47.3% 0.137 46.201);
-    --color-green-50: oklch(98.2% 0.018 155.826);
-    --color-green-500: oklch(72.3% 0.219 149.579);
     --color-blue-200: oklch(88.2% 0.059 254.128);
     --color-blue-400: oklch(70.7% 0.165 254.624);
     --color-blue-500: oklch(62.3% 0.214 259.815);
     --color-slate-50: oklch(98.4% 0.003 247.858);
     --color-slate-200: oklch(92.9% 0.013 255.508);
-    --color-slate-400: oklch(70.4% 0.04 256.788);
     --color-slate-500: oklch(55.4% 0.046 257.417);
     --color-slate-600: oklch(44.6% 0.043 257.281);
     --color-slate-800: oklch(27.9% 0.041 260.031);
@@ -264,6 +260,9 @@
   .z-50 {
     z-index: 50;
   }
+  .m-4 {
+    margin: calc(var(--spacing) * 4);
+  }
   .mx-4 {
     margin-inline: calc(var(--spacing) * 4);
   }
@@ -345,6 +344,9 @@
   .h-2 {
     height: calc(var(--spacing) * 2);
   }
+  .h-4 {
+    height: calc(var(--spacing) * 4);
+  }
   .h-60 {
     height: calc(var(--spacing) * 60);
   }
@@ -359,6 +361,9 @@
   }
   .min-h-screen {
     min-height: 100vh;
+  }
+  .w-4 {
+    width: calc(var(--spacing) * 4);
   }
   .w-full {
     width: 100%;
@@ -477,17 +482,8 @@
   .border-\[\#FF000D\] {
     border-color: #FF000D;
   }
-  .border-amber-500 {
-    border-color: var(--color-amber-500);
-  }
-  .border-amber-800 {
-    border-color: var(--color-amber-800);
-  }
   .border-blue-500 {
     border-color: var(--color-blue-500);
-  }
-  .border-green-500 {
-    border-color: var(--color-green-500);
   }
   .border-red-500 {
     border-color: var(--color-red-500);
@@ -495,20 +491,14 @@
   .border-slate-200 {
     border-color: var(--color-slate-200);
   }
-  .border-slate-400 {
-    border-color: var(--color-slate-400);
-  }
-  .border-slate-800 {
-    border-color: var(--color-slate-800);
-  }
   .bg-\[\#41C3DD\]\/60 {
     background-color: color-mix(in oklab, #41C3DD 60%, transparent);
   }
   .bg-\[\#CBCCCE\]\/20 {
     background-color: color-mix(in oklab, #CBCCCE 20%, transparent);
   }
-  .bg-amber-400 {
-    background-color: var(--color-amber-400);
+  .bg-amber-300 {
+    background-color: var(--color-amber-300);
   }
   .bg-black\/40 {
     background-color: color-mix(in srgb, #000 40%, transparent);
@@ -524,9 +514,6 @@
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-blue-500) 80%, transparent);
     }
-  }
-  .bg-green-50 {
-    background-color: var(--color-green-50);
   }
   .bg-red-500\/80 {
     background-color: color-mix(in srgb, oklch(63.7% 0.237 25.331) 80%, transparent);
@@ -725,9 +712,6 @@
   .text-amber-500 {
     color: var(--color-amber-500);
   }
-  .text-amber-800 {
-    color: var(--color-amber-800);
-  }
   .text-blue-400 {
     color: var(--color-blue-400);
   }
@@ -739,9 +723,6 @@
     @supports (color: color-mix(in lab, red, red)) {
       color: color-mix(in oklab, var(--color-blue-500) 80%, transparent);
     }
-  }
-  .text-green-500 {
-    color: var(--color-green-500);
   }
   .text-red-500 {
     color: var(--color-red-500);
@@ -792,6 +773,11 @@
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
+  .transition-transform {
+    transition-property: transform, translate, scale, rotate;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
   .duration-200 {
     --tw-duration: 200ms;
     transition-duration: 200ms;
@@ -803,6 +789,11 @@
   .ease-out {
     --tw-ease: var(--ease-out);
     transition-timing-function: var(--ease-out);
+  }
+  .group-open\:rotate-180 {
+    &:is(:where(.group):is([open], :popover-open, :open) *) {
+      rotate: 180deg;
+    }
   }
   .peer-checked\:border-\[\#0D0D0D\] {
     &:is(:where(.peer):checked ~ *) {
@@ -989,9 +980,9 @@
       margin-right: calc(var(--spacing) * 0);
     }
   }
-  .lg\:ml-4 {
+  .lg\:ml-2 {
     @media (width >= 64rem) {
-      margin-left: calc(var(--spacing) * 4);
+      margin-left: calc(var(--spacing) * 2);
     }
   }
   .lg\:block {

@@ -8,12 +8,12 @@
 
   <div class="flex flex-1 flex-col">
     {{#if loadError}}
-      <p class="text-red-500 text-sm border border-red-500 px-2 rounded inline-block">
+      <p class="text-red-500 text-sm border border-red-500 px-2 rounded inline-block m-4">
         Something went wrong loading posts.
       </p>
     {{else if posts}}
       {{#if pinnedPosts}}
-<div class="flex items-center justify-between gap-4 tracking-wide font-mono uppercase px-4 py-2 text-sm bg-blue-200 text-blue-500 border-y md:border-x border-blue-500 sticky z-30 top-[54px]">
+<div class="flex items-center justify-between gap-4 tracking-wide font-mono uppercase px-4 py-2 text-sm border-y md:border-x border-slate-200 sticky z-30 top-[54px]">
     <p>Pinned Posts</p>
   <i class="ph ph-push-pin"></i>
 </div>
@@ -23,7 +23,7 @@
         {{/each}}
       {{/if}}
       {{#if posts}}
-<div class="flex items-center justify-between gap-4 tracking-wide font-mono uppercase px-4 py-2 text-sm bg-slate-50 text-slate-800 border-y md:border-x border-slate-800 sticky z-30 top-[54px]">
+<div class="flex items-center justify-between gap-4 tracking-wide font-mono uppercase px-4 py-2 text-sm text-slate-800 border-y md:border-x border-slate-200 sticky z-30 top-[54px]">
     <p>Latest Posts</p>
   <i class="ph ph-clock"></i>
 </div>
@@ -48,7 +48,7 @@
         <p>No jobs yet.</p>
         <a
           href="/jobs/board"
-          class="inline-flex items-center bg-blue-500/80 px-3 py-2 font-mono text-sm uppercase tracking-wider text-white"
+          class="inline-flex items-center px-3 py-2 font-mono text-sm uppercase tracking-wider border"
         >
           Reset filters
         </a>
