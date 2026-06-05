@@ -7,7 +7,6 @@
 ## Current
 
 - Fix manage dashboard
-- Remove last pinned card's bottom border
 - Fix footer on form's review page
 - Align error handling with Vercel logs
 

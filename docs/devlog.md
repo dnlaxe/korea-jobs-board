@@ -308,3 +308,7 @@ server.closeAllConnections():
 - created health endpoints
 - created a cache for live job posts
 - added mock posts
+
+## 2026-06-05
+
+- removed last pinned card's bottom border (`divide-y`)

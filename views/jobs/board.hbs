@@ -13,24 +13,32 @@
       </p>
     {{else if posts}}
       {{#if pinnedPosts}}
-<div class="flex items-center justify-between gap-4 tracking-wide font-mono uppercase px-4 py-2 text-sm border-y md:border-x border-slate-200 sticky z-30 top-[52px] bg-white">
-    <p>Pinned Posts</p>
-  <i class="ph ph-push-pin"></i>
-</div>
+        <div class="flex items-center justify-between gap-4 tracking-wide font-mono uppercase px-4 py-2 text-sm border-y md:border-x border-slate-200 sticky z-30 top-[52px] bg-white">
+            <p>Pinned Posts</p>
+          <i class="ph ph-push-pin"></i>
+        </div>
 
-        {{#each pinnedPosts}}
-          {{> public-job-card this}}
-        {{/each}}
+        <div class="divide-y divide-slate-200">
+          {{#each pinnedPosts}}
+            {{> public-job-card this}}
+          {{/each}}
+        </div>
+
       {{/if}}
       {{#if posts}}
-<div class="flex items-center justify-between gap-4 tracking-wide font-mono uppercase px-4 py-2 text-sm text-slate-800 border-y md:border-x border-slate-200 sticky z-30 top-[52px] bg-white">
-    <p>Latest Posts</p>
-  <i class="ph ph-clock"></i>
-</div>
-        {{#each posts}}
-          {{> public-job-card this}}
-        {{/each}}
+      <div class="flex items-center justify-between gap-4 tracking-wide font-mono uppercase px-4 py-2 text-sm text-slate-800 border-y md:border-x border-slate-200 sticky z-30 top-[52px] bg-white">
+          <p>Latest Posts</p>
+        <i class="ph ph-clock"></i>
+      </div>
+
+          {{#each posts}}
+                  <div class="border-b border-slate-200">
+            {{> public-job-card this}}
+            </div>
+          {{/each}}
+      
       {{/if}}
+
       <div class="flex justify-between">
       <a
         href="#"
