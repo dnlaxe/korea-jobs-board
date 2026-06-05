@@ -40,6 +40,8 @@ app.disable("x-powered-by");
 
 if (isBasicAuthEnabled) {
   app.use(requireBasicAuth);
+} else {
+  app.use("/admin", requireBasicAuth);
 }
 
 app.use(express.urlencoded({ extended: true }));
@@ -48,10 +50,6 @@ app.use(express.json());
 app.use(healthRouter);
 app.use(jobsRouter);
 app.use(paymentRouter);
-
-if (!isBasicAuthEnabled) {
-  app.use("/admin", requireBasicAuth);
-}
 
 app.use(adminRouter);
 app.use(manageRouter);

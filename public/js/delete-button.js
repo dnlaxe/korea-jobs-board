@@ -11,7 +11,6 @@ if (!modal || !confirmButton || !cancelButton || !triggers.length) {
   function closeModal() {
     modal.classList.add("hidden");
     modal.classList.remove("flex");
-    modal.setAttribute("aria-hidden", "true");
     activeForm = null;
   }
 
@@ -19,7 +18,6 @@ if (!modal || !confirmButton || !cancelButton || !triggers.length) {
     activeForm = form;
     modal.classList.remove("hidden");
     modal.classList.add("flex");
-    modal.setAttribute("aria-hidden", "false");
     confirmButton.focus();
   }
 
