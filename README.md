@@ -2,7 +2,7 @@
 
 ## Live demo
 
-https://dnlaxe.github.io/portfolio/project-job-board/
+https://korea-jobs-board.vercel.app/jobs/board
 
 Portfolio project demonstrating full-stack, backend-focused development with Express, PostgreSQL, and TypeScript.
 
