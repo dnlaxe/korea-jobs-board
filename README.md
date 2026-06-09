@@ -1,6 +1,12 @@
 # Job Board (No Accounts)
 
+## Live demo
+
+https://dnlaxe.github.io/portfolio/project-job-board/
+
 Portfolio project demonstrating full-stack, backend-focused development with Express, PostgreSQL, and TypeScript.
+
+## Description
 
 A job board where:
 
