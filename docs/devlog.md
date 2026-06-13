@@ -312,3 +312,25 @@ server.closeAllConnections():
 ## 2026-06-05
 
 - removed last pinned card's bottom border (`divide-y`)
+
+## 2026-06-09
+
+- deployed onto Vervel serverless
+- created a postgres database on neon through vercel
+
+## 2026-06-13
+
+- deployment has lead to numerous issues
+
+1. The site often fails to connect to the postgres database
+2. When there is an error submitting the form, the form reloads the form page losing all data saved in state
+
+Solution 1:
+
+By rearranging the order of my startup, 1 seems to have been solved. I have moved connecting to the database before starting server.
+
+Solution 2:
+
+This issue was being caused by `loadSession`. Every request is checked to see if there is a session or not. This was running when the form was submitted. This meant that if there was an error from `loadSession`, it would be handled there meaning the form would not be reloaded and the data would be lost. To solve this I added a flag `sessionLoadFailure` which becomes true if the database is unable to reached to look for a session. I then added another middleware `sessionUnavailable` which will render the form at the review part with its data and an error message if `sessionLoadFailure` is true.
+
+- I noticed that there were delays after clicking buttons. So I added loading messages to the buttons in `loading.js`. The same pattern was reused often so i turned it into a function.

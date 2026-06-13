@@ -32,6 +32,7 @@ if (!modal || !confirmButton || !cancelButton || !triggers.length) {
 
   confirmButton.addEventListener("click", () => {
     if (!activeForm) return;
+    confirmButton.textContent = "Deleting";
     activeForm.submit();
   });
 

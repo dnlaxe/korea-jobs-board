@@ -6,7 +6,6 @@ import compression from "compression";
 import { engine } from "express-handlebars";
 import path from "path";
 import { fileURLToPath } from "url";
-import { Request, Response } from "express";
 import jobsRouter from "./features/jobs/jobs.routes.js";
 import adminRouter from "./features/admin/admin.routes.js";
 import manageRouter from "./features/manage/manage.routes.js";
@@ -77,10 +76,6 @@ app.engine(
 
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "../views"));
-
-app.get("/", (req: Request, res: Response) => {
-  res.render("pages/board");
-});
 
 app.use(notFoundHandler);
 app.use(globalErrorHandler);

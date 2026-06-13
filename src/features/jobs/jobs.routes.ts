@@ -29,6 +29,7 @@ import {
   loadSession,
   requireGatewayEmail,
   resolveSession,
+  sessionUnavailable,
 } from "../../middleware/session.js";
 import { startSchema } from "./jobs.schema.js";
 import hideFooter from "../../middleware/hideFooter.js";
@@ -68,6 +69,7 @@ router.post(
 
 router.post(
   "/jobs/new",
+  sessionUnavailable,
   requireGatewayEmail,
   hideFooter,
   validate(jobFormSchema, "jobs/new", {

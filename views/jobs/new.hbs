@@ -227,6 +227,11 @@
     </div>
 
   <div class="review step" hidden>
+    {{#if actionError}}
+      <div class="mb-4 p-4 border border-red-300 bg-red-50 text-red-800">
+        {{actionError}}
+      </div>
+    {{/if}}
     <button type="submit" class="btn-confirm inline-block tracking-wide border border-slate-200 py-2 px-3 font-mono uppercase hover:border-black text-sm">Confirm</button>
   </div>
 

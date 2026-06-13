@@ -6,6 +6,12 @@ import {
   getSessionByToken,
   refreshSession,
 } from "../repo/session.repo.js";
+import {
+  citiesByProvince,
+  jobFormOptions,
+  limits,
+  specializationsByCategory,
+} from "../features/jobs/jobs.constants.js";
 
 export async function resolveSession(
   req: Request,
@@ -66,6 +72,7 @@ export async function loadSession(
       }
     } catch (err) {
       req.log.error({ err }, "loadSession error");
+      req.sessionLoadFailure = true;
     }
   }
   next();
@@ -92,6 +99,28 @@ export async function hasCurrentSession(
   const session = await getSessionBySessionId(req.sessionId);
   if (session?.email) {
     return res.redirect("/jobs/new");
+  }
+  next();
+}
+
+export function sessionUnavailable(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  if (req.sessionLoadFailure) {
+    req.log.error({ req }, "Session unavailable");
+
+    return res.status(503).render("jobs/new", {
+      jobFormOptions,
+      specializationsByCategory: JSON.stringify(specializationsByCategory),
+      citiesByProvince: JSON.stringify(citiesByProvince),
+      limits,
+      values: req.body,
+      ...req.body,
+      actionError: "Please try again.",
+      fieldErrors: {},
+    });
   }
   next();
 }
