@@ -3,6 +3,7 @@
 ## Fixed
 
 - Added loading states
+- Changed db pooling to neon-http client.
 
 ## Current
 
@@ -28,5 +29,5 @@
 
 ## Known Problems
 
-- Rate limiting is still broad and simple
+- Rate limiter needs to be replaced, not compatitable with neon http serverless.
 - Emails still send to a hardcoded address instead of the intended recipients

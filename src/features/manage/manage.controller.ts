@@ -5,7 +5,11 @@ import {
   unpublishUserPost,
   updatePost,
 } from "./manage.services.js";
-import { jobFormOptions, specializationsByCategory, citiesByProvince } from "../jobs/jobs.constants.js";
+import {
+  jobFormOptions,
+  specializationsByCategory,
+  citiesByProvince,
+} from "../jobs/jobs.constants.js";
 
 export async function showUserDashboard(req: Request, res: Response) {
   const actionError = req.query.error as string | undefined;
@@ -41,6 +45,7 @@ export async function showEditform(req: Request, res: Response) {
     token,
     specializationsByCategory: JSON.stringify(specializationsByCategory),
     citiesByProvince: JSON.stringify(citiesByProvince),
+    fieldErrors: {},
   });
 }
 

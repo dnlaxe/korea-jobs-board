@@ -14,6 +14,7 @@ export default function createShutdownHandler(server: Server) {
 
     appLogger.info({ signal }, "Shutdown initiated");
 
+    // Vercel handles most of this.
     server.getConnections((err, count) => {
       if (err) {
         appLogger.error({ err }, "Error checking connection count");

@@ -334,3 +334,10 @@ Solution 2:
 This issue was being caused by `loadSession`. Every request is checked to see if there is a session or not. This was running when the form was submitted. This meant that if there was an error from `loadSession`, it would be handled there meaning the form would not be reloaded and the data would be lost. To solve this I added a flag `sessionLoadFailure` which becomes true if the database is unable to reached to look for a session. I then added another middleware `sessionUnavailable` which will render the form at the review part with its data and an error message if `sessionLoadFailure` is true.
 
 - I noticed that there were delays after clicking buttons. So I added loading messages to the buttons in `loading.js`. The same pattern was reused often so i turned it into a function.
+
+## 2026-06-13
+
+- Swapped `drizzle-orm/node-postgres` for `drizzle-orm/neon-http`
+- As this is being delployed on vercel as serverless, a persistent connection (TCP socket, pg driver) is not the right choice. So it was replaced by neon's stateless http client (this conencts to the database over http!). However first impressions of this is that there is a latency issue (lags).
+- This meant updating `db/db.ts`, `server.ts` and `shutdown.ts`.
+- It also meant commenting out the rate-limiter middleware as this isn't compatitable.

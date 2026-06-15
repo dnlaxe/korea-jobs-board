@@ -70,3 +70,9 @@
 ### Deployed
 
 - Deployed at https://korea-jobs-board.vercel.app/jobs/board
+
+# 2026-06-13
+
+### Changed
+
+- Switched to `neon-http` instead of `pg` driver. It was deployed as serverless so persistent database isn't right choice.

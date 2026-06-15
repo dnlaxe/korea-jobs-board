@@ -292,12 +292,7 @@ function buildReviewPage() {
         reviewContent.textContent = `${value}: ${reviewLabel}`;
       }
 
-      reviewStep.classList.add(
-        "grid",
-        "md:grid-cols-2",
-        "gap-2",
-        "lg:grid-cols-3",
-      );
+      reviewStep.classList.add("grid", "md:grid-cols-2", "gap-2");
       reviewItem.classList.add(
         "border",
         "border-slate-200",
@@ -307,8 +302,7 @@ function buildReviewPage() {
         "gap-2",
       );
 
-      if (key === "fullDescription")
-        reviewItem.classList.add("md:col-span-2", "lg:col-span-3");
+      if (key === "fullDescription") reviewItem.classList.add("md:col-span-2");
 
       editBtn.type = "button";
 
