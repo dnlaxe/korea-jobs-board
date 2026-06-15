@@ -6,6 +6,8 @@ if (!config.db_url) {
   throw new Error("DATABASE_URL is missing from .env");
 }
 
+console.log("Checking DB URL:", config.db_url);
+
 const sql = neon(config.db_url);
 
 export const db = drizzle(sql);
