@@ -174,7 +174,7 @@ document.querySelectorAll("input[type=radio]").forEach((radio) => {
     if (isStepComplete() && current < steps.length - 1) {
       setTimeout(() => {
         showStep(current + 1);
-      }, 10000);
+      }, 200);
     }
   });
 });
@@ -205,7 +205,7 @@ document.querySelectorAll("[data-step-inline-next]").forEach((btn) => {
     if (isStepComplete() && current < steps.length - 1) {
       setTimeout(() => {
         showStep(current + 1);
-      }, 10000);
+      }, 200);
     }
   });
 });
