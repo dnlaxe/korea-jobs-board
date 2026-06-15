@@ -1,6 +1,5 @@
 import { Server } from "node:http";
 import { appLogger } from "./middleware/logger.js";
-import { Pool } from "pg";
 import {
   isShuttingDown,
   markShuttingDown,
@@ -8,12 +7,11 @@ import {
 
 const SHUTDOWN_TIMEOUT_MS = 3_000;
 
-export default function createShutdownHandler(server: Server, pool: Pool) {
+export default function createShutdownHandler(server: Server) {
   return function (signal: string) {
     if (isShuttingDown()) return;
     markShuttingDown();
 
-    console.trace("Shutdown handler triggered");
     appLogger.info({ signal }, "Shutdown initiated");
 
     server.getConnections((err, count) => {
@@ -28,9 +26,7 @@ export default function createShutdownHandler(server: Server, pool: Pool) {
     });
 
     const forceExit = setTimeout(() => {
-      const resources = process.getActiveResourcesInfo();
-
-      appLogger.error({ resources }, "Shutdown timed out, forcing exit");
+      appLogger.error("Shutdown timed out, forcing exit");
       appLogger.flush();
       process.exit(1);
     }, SHUTDOWN_TIMEOUT_MS);
@@ -38,20 +34,19 @@ export default function createShutdownHandler(server: Server, pool: Pool) {
     forceExit.unref();
 
     server.closeIdleConnections();
-    server.close(async () => {
-      try {
-        appLogger.info("HTTP server closed");
-        await pool.end();
-        appLogger.info("PostgreSQL pool closed");
-        appLogger.flush();
-        clearTimeout(forceExit);
-        appLogger.info("Graceful shutdown complete");
-        process.exit(0);
-      } catch (err) {
-        appLogger.error({ err }, "Error during shutdown");
+
+    server.close((err) => {
+      if (err) {
+        appLogger.error({ err }, "Error during HTTP server shutdown");
         appLogger.flush();
         process.exit(1);
       }
+
+      appLogger.info("HTTP server closed");
+      clearTimeout(forceExit);
+      appLogger.info("Graceful shutdown complete");
+      appLogger.flush();
+      process.exit(0);
     });
   };
 }
