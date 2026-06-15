@@ -2,6 +2,8 @@
 // import { RateLimiterPostgres } from "rate-limiter-flexible";
 // import { pool } from "../db/db.js";
 
+import { Request, Response, NextFunction } from "express";
+
 // const rateLimiter = new RateLimiterPostgres({
 //   storeClient: pool,
 //   keyPrefix: "middleware",
@@ -26,3 +28,11 @@
 // };
 
 // export default rateLimiterMiddleware;
+
+export const rateLimiterMiddleware = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  next();
+};
