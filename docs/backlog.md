@@ -7,11 +7,12 @@
 ## Current
 
 - How to handle database timing out
-- Fix manage dashboard
-- Fix footer on form's review page
 
 ## Next
 
+- Fix manage dashboard
+- Fix footer on form's review page
+- Helmet + rate limiter issues on vercel deployment
 - Review all manage pages
 - Contact page UI
 - Review Admin dashboard. show metadata from logs

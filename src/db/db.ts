@@ -1,18 +1,11 @@
-import { Pool } from "pg";
-import { drizzle } from "drizzle-orm/node-postgres";
+import { drizzle } from "drizzle-orm/neon-http";
 import { config } from "../config/config.js";
-import { logger } from "../middleware/logger.js";
+import { neon } from "@neondatabase/serverless";
 
 if (!config.db_url) {
   throw new Error("DATABASE_URL is missing from .env");
 }
 
-export const pool = new Pool({
-  connectionString: config.db_url,
-});
+const sql = neon(config.db_url);
 
-pool.on("error", (err) => {
-  logger.error({ err }, "Unexpected Postgres pool error occurs");
-});
-
-export const db = drizzle(pool);
+export const db = drizzle(sql);
