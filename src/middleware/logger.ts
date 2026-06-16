@@ -45,7 +45,7 @@ export const logger = pinoHttp({
     return `${req.method} | ${req.url} | ${res.statusCode} | ERROR: ${err.message}`;
   },
 
-  hide json dumps
+  // hide json dumps
   serializers: {
     req: () => undefined,
     res: () => undefined,
