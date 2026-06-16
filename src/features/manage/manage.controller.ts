@@ -12,7 +12,7 @@ import {
 } from "../jobs/jobs.constants.js";
 
 export async function showUserDashboard(req: Request, res: Response) {
-  const actionError = req.query.error as string | undefined;
+  const actionError = req.query.error as string | null;
   const token = req.query.token as string;
   const result = await getUsersPosts(token);
 
