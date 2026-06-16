@@ -32,7 +32,11 @@
       <button type="submit" class="underline">Extend</button>
     </form>
     <form method="POST" action="/manage/delete/{{id}}?token={{token}}">
-      <button type="submit" class="underline">Delete</button>
+      <button
+        type="button"
+        class="underline"
+        data-delete-trigger=""
+      >Delete</button>
     </form>
   </div>
 </div>

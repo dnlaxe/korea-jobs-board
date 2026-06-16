@@ -17,4 +17,14 @@
     {{/each}}
   </div>
 
+  {{> confirm-modal
+  id="delete-post"
+  title="Delete post?"
+  message="This post will be permanently removed."
+  confirmLabel="Delete"
+  cancelLabel="Cancel"
+}}
+
 </div>
+
+<script type="module" src="/js/delete-button.js"></script>
