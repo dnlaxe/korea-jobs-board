@@ -2,10 +2,13 @@ const filterBtn = document.getElementById("applyButton");
 const resetBtn = document.getElementById("resetButton");
 const emailCheckBtn = document.getElementById("checkEmail");
 const startJobForm = document.getElementById("startJobForm");
+const filterForm = document.querySelector(".filter-form");
 
-if (filterBtn) {
-  filterBtn.addEventListener("click", () => {
-    loading(filterBtn, "Searching");
+if (filterForm) {
+  filterForm.addEventListener("submit", () => {
+    if (filterBtn) {
+      filterBtn.textContent = "Searching";
+    }
   });
 }
 
