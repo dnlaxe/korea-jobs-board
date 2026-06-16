@@ -2,7 +2,7 @@
 <script class="js-has-errors" type="application/json">{{{json fieldErrors}}}</script>
 {{/if}}
 
-<form action="/jobs/new" method="POST" data-specializations='{{{specializationsByCategory}}}' data-cities='{{{citiesByProvince}}}' class="px-4 md:mx-0 pb-4 md:h-dvh">
+<form action="/manage/edit/{{values.id}}?token={{token}}" method="POST" data-specializations='{{{specializationsByCategory}}}' data-cities='{{{citiesByProvince}}}' class="px-4 md:mx-0 pb-4 md:h-full">
 <div class="sessionEmail" hidden>{{sessionEmail}}</div>
 
   <div class="mb-8 mt-4" aria-label="Form progress">
@@ -232,11 +232,11 @@
         {{actionError}}
       </div>
     {{/if}}
-    <button type="submit" class="btn-confirm inline-block tracking-wide border border-slate-200 py-2 px-3 font-mono uppercase hover:border-black text-sm">Confirm</button>
+    <button type="submit" class="btn-confirm tracking-wide px-3 py-2 font-mono uppercase text-sm bg-amber-300 w-fit">Confirm</button>
   </div>
 
   <button type="button" class="btn-back-to-review border font-mono tracking-wide uppercase mt-4 py-1 px-4" hidden>Back to review</button>
 
 </form>
 
-<script type="module" src="/js/form.js"></script>
+<script type="module" src="/js/manage/edit.js"></script>

@@ -76,3 +76,9 @@
 ### Changed
 
 - Switched to `neon-http` instead of `pg` driver. It was deployed as serverless so persistent database isn't right choice.
+
+# 2026-06-14
+
+### Added
+
+- Post management dashboard and edit flow

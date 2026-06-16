@@ -86,6 +86,8 @@ function showStep(index) {
     s.hidden = index !== i;
     current = index;
   });
+  const reviewHeading = document.querySelector(".review-heading");
+  if (reviewHeading) reviewHeading.hidden = index !== STEPS.REVIEW;
   updateProgressBar();
   updateBtns();
 }
@@ -246,6 +248,18 @@ function buildReviewPage() {
   isEdit = true;
 
   reviewStep.textContent = "";
+
+  document.querySelector(".review-heading")?.remove();
+
+  const headingDiv = document.createElement("div");
+  headingDiv.className =
+    "review-heading flex items-center justify-between gap-4 tracking-wide font-mono uppercase px-4 py-2 text-sm text-slate-800 border border-slate-200 sticky z-30 top-[52px] bg-white mb-2";
+  const headingP = document.createElement("p");
+  headingP.textContent = "Please check your post";
+  const icon = document.createElement("i");
+  icon.className = "ph ph-binoculars";
+  headingDiv.append(headingP, icon);
+  reviewStep.before(headingDiv);
 
   Object.entries(fieldLabels).forEach(([key, value]) => {
     const stepIndex = stepsConfig.findIndex((step) =>
