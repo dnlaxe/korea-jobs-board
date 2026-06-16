@@ -58,7 +58,7 @@ export async function submitEditform(req: Request, res: Response) {
     return res.redirect(`/manage?token=${token}&error=update_failed`);
   }
 
-  return res.render("/success", {
+  return res.render("success", {
     title: "Job Updated",
     message: "Your job posting has been successfully updated.",
     link: {

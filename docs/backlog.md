@@ -4,10 +4,12 @@
 
 - Added loading states
 - Changed db pooling to neon-http client.
+- Post management
 
 ## Current
 
-- How to handle database timing out
+- What happens if post dashboard has no posts, ghost dashboards...
+- in review, going to step to edit, but the deciding to keep the same (no clicks), deletes the selection from state entirely. all options are shoing first time in review...
 
 ## Next
 
