@@ -10,6 +10,7 @@
 
 - What happens if post dashboard has no posts, ghost dashboards...
 - in review, going to step to edit, but the deciding to keep the same (no clicks), deletes the selection from state entirely. all options are shoing first time in review...
+- extract css from tailwind
 
 ## Next
 
